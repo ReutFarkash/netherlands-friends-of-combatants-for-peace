@@ -24,38 +24,45 @@
     system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Base page styling. */
-html {
-  scroll-behavior: smooth;
-}
+/*
+  Base element defaults live in @layer base so Tailwind utilities always win
+  over them. Unlayered rules beat layered utilities regardless of specificity —
+  without this layer, `a { color: teal }` overrode `text-white` on the header
+  nav and drowned the links on the teal bar.
+*/
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-body {
-  background-color: var(--color-bg-cool);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
-  line-height: 1.6;
-}
+  body {
+    background-color: var(--color-bg-cool);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+  }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-serif);
-  color: var(--color-teal-deep);
-  line-height: 1.2;
-  text-wrap: balance;
-}
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    color: var(--color-teal-deep);
+    line-height: 1.2;
+    text-wrap: balance;
+  }
 
-a {
-  color: var(--color-teal);
-}
+  a {
+    color: var(--color-teal);
+  }
 
-a:hover {
-  color: var(--color-teal-deep);
-}
+  a:hover {
+    color: var(--color-teal-deep);
+  }
 
-/* Visible keyboard focus for accessibility. */
-:focus-visible {
-  outline: 3px solid var(--color-teal);
-  outline-offset: 2px;
+  /* Visible keyboard focus for accessibility. */
+  :focus-visible {
+    outline: 3px solid var(--color-teal);
+    outline-offset: 2px;
+  }
 }
