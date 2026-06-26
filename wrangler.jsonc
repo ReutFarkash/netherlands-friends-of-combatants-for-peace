@@ -1,0 +1,9 @@
+{
+  // Cloudflare Worker serving the static Astro build (assets-only — no server code).
+  // Workers Builds runs `npm run build` → ./dist, then `npx wrangler deploy` reads this.
+  "name": "netherlands-friends-of-combatants-for-peace",
+  "compatibility_date": "2026-06-26",
+  "assets": {
+    "directory": "./dist"
+  }
+}
