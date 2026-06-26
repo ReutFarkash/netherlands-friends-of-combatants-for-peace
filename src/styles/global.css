@@ -1,0 +1,61 @@
+@import 'tailwindcss';
+
+/* Self-hosted Merriweather (headings). Body uses a system sans stack. */
+@import '@fontsource/merriweather/400.css';
+@import '@fontsource/merriweather/700.css';
+@import '@fontsource/merriweather/900.css';
+
+/*
+  Brand theme tokens. Tailwind v4 reads these from @theme and exposes them
+  as utilities (e.g. bg-teal-deep, text-ink) and CSS variables (var(--color-teal)).
+*/
+@theme {
+  --color-teal-deep: #036564;
+  --color-teal: #237677;
+  --color-sage: #78938b;
+  --color-sage-lt: #b6c8a8;
+  --color-brown: #594434;
+  --color-ink: #1d1d1b;
+  --color-bg-cool: #f8f9f7;
+  --color-bg-warm: #f6f1e9;
+
+  --font-serif: 'Merriweather', Georgia, 'Times New Roman', serif;
+  --font-sans:
+    system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Base page styling. */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg-cool);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  color: var(--color-teal-deep);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+a {
+  color: var(--color-teal);
+}
+
+a:hover {
+  color: var(--color-teal-deep);
+}
+
+/* Visible keyboard focus for accessibility. */
+:focus-visible {
+  outline: 3px solid var(--color-teal);
+  outline-offset: 2px;
+}

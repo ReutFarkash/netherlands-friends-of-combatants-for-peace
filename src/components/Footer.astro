@@ -1,0 +1,73 @@
+---
+import { useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const email = 'nlcfpfriends@gmail.com';
+const socials = [
+  { label: 'Instagram', href: 'https://www.instagram.com/nlfcfpeace' },
+  {
+    label: 'Facebook',
+    href: 'https://www.facebook.com/people/Netherlands-friends-of-CfP/61587000159046/',
+  },
+  { label: 'Linktree', href: 'https://linktr.ee/nlfcfp' },
+];
+---
+
+<footer class="mt-16 bg-teal-deep text-white">
+  <div class="mx-auto max-w-6xl px-4 py-10">
+    <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+      <div>
+        <p class="font-serif text-lg text-white">{t('site.title')}</p>
+        <p class="mt-2 max-w-md text-sm text-white/75">
+          {t('footer.affiliation')}
+        </p>
+      </div>
+
+      <nav aria-label="Social and contact" class="text-sm">
+        <ul class="flex flex-col gap-2">
+          <li>
+            <span class="text-white/60">{t('contact.emailLabel')}:</span>{' '}
+            <a class="text-white underline hover:text-sage-lt" href={`mailto:${email}`}>
+              {email}
+            </a>
+          </li>
+          {
+            socials.map((s) => (
+              <li>
+                <a
+                  class="text-white underline hover:text-sage-lt"
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {s.label}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <span class="text-white/60">{t('footer.parentMovement')}:</span>{' '}
+            <a
+              class="text-white underline hover:text-sage-lt"
+              href="https://www.cfpeace.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              cfpeace.org
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <p class="mt-8 border-t border-white/15 pt-4 text-xs text-white/50">
+      &copy; {new Date().getFullYear()} {t('site.title')}.
+    </p>
+  </div>
+</footer>

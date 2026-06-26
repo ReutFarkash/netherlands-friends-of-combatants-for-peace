@@ -1,0 +1,73 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { useTranslations, type Locale, type UIKey } from '../i18n/ui';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+interface Props {
+  locale: Locale;
+  /** Current route slug without locale prefix. */
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const t = useTranslations(locale);
+
+// White logo lives in public/ — prefix with base so it resolves under the sub-path.
+const logoSrc = `${import.meta.env.BASE_URL}/logo-white.png`.replace('//', '/');
+
+const navItems: { key: UIKey; slug: string }[] = [
+  { key: 'nav.home', slug: '' },
+  { key: 'nav.about', slug: 'about' },
+  { key: 'nav.events', slug: 'events' },
+  { key: 'nav.getInvolved', slug: 'get-involved' },
+  { key: 'nav.contact', slug: 'contact' },
+];
+
+const isActive = (slug: string) => slug === path;
+---
+
+<header class="bg-teal-deep text-white">
+  <div
+    class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-3"
+  >
+    <a
+      href={getRelativeLocaleUrl(locale, '')}
+      class="flex items-center gap-3 text-white hover:text-white"
+    >
+      <img
+        src={logoSrc}
+        alt={t('site.title')}
+        width="48"
+        height="48"
+        class="h-12 w-auto"
+      />
+      <span class="font-serif text-base leading-tight sm:text-lg">
+        {t('site.shortTitle')}
+      </span>
+    </a>
+
+    <div class="flex items-center gap-6">
+      <nav aria-label="Primary">
+        <ul class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm">
+          {
+            navItems.map((item) => (
+              <li>
+                <a
+                  href={getRelativeLocaleUrl(locale, item.slug)}
+                  class:list={[
+                    'text-white/85 hover:text-white',
+                    isActive(item.slug) && 'border-b-2 border-sage-lt font-semibold text-white',
+                  ]}
+                  aria-current={isActive(item.slug) ? 'page' : undefined}
+                >
+                  {t(item.key)}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <LanguageSwitcher locale={locale} path={path} />
+    </div>
+  </div>
+</header>
