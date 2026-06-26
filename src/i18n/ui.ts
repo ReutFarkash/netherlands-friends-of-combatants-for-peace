@@ -24,6 +24,11 @@ export const ui = {
     'home.mission':
       'We are based in the Netherlands as one of many worldwide support groups connected to Combatants for Peace. We are working together non-violently to end the occupation and bring peace, equality and security for all people in the area.',
 
+    'home.instagram.title': 'From our Instagram',
+    'home.instagram.body':
+      'Follow @nlfcfpeace for updates, actions and upcoming events.',
+    'home.instagram.cta': 'Follow on Instagram',
+
     'about.title': 'About',
     'about.placeholder':
       'Placeholder copy. Combatants for Peace is a movement of Israelis and Palestinians who have laid down their weapons and work together non-violently against the occupation and for a future of peace, equality and security. The Netherlands Friends group is one of many worldwide support groups connected to the movement.',
@@ -72,6 +77,11 @@ export const ui = {
 
     'home.mission':
       'Wij zijn gevestigd in Nederland en zijn een van de vele ondersteunende groepen die bij Combatants for Peace zijn aangesloten. Wij werken samen op geweldloze wijze om een einde te maken aan de bezetting en vrede, gelijkheid en veiligheid te brengen voor alle mensen in het gebied.',
+
+    'home.instagram.title': 'Van onze Instagram',
+    'home.instagram.body':
+      'Volg @nlfcfpeace voor updates, acties en aankomende activiteiten.',
+    'home.instagram.cta': 'Volg op Instagram',
 
     'about.title': 'Over ons',
     'about.placeholder':

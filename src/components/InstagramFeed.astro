@@ -1,0 +1,66 @@
+---
+import { useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+// Live Behold feed switches on as soon as this is set. To enable:
+//   1. Roni connects @nlfcfpeace in Behold (app.behold.so) and creates a Widget feed.
+//   2. Copy the feed-id from the widget's embed code.
+//   3. Set PUBLIC_BEHOLD_FEED_ID — locally in .env, on Cloudflare in the
+//      project's build variables (Settings → Variables), then redeploy.
+// Until then, the on-brand "Follow on Instagram" card below is shown instead.
+const feedId = import.meta.env.PUBLIC_BEHOLD_FEED_ID ?? '';
+const instagramUrl = 'https://www.instagram.com/nlfcfpeace';
+---
+
+<section class="flex flex-col items-center gap-6 py-12 text-center">
+  <h2 class="text-2xl sm:text-3xl">{t('home.instagram.title')}</h2>
+
+  {feedId ? (
+    <div class="w-full max-w-3xl">
+      <behold-widget feed-id={feedId}></behold-widget>
+      <script is:inline>
+        (() => {
+          const d = document,
+            s = d.createElement('script');
+          s.type = 'module';
+          s.src = 'https://w.behold.so/widget.js';
+          d.head.append(s);
+        })();
+      </script>
+    </div>
+  ) : (
+    <div class="flex w-full max-w-md flex-col items-center gap-4 rounded-xl border border-teal-deep/20 px-8 py-10">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-10 w-10 text-teal-deep"
+        aria-hidden="true"
+      >
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+      </svg>
+      <p class="text-lg text-ink/80">{t('home.instagram.body')}</p>
+    </div>
+  )}
+
+  <a
+    href={instagramUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="rounded-md border-2 border-teal-deep px-6 py-3 font-semibold text-teal-deep no-underline hover:bg-teal-deep hover:text-white"
+  >
+    {t('home.instagram.cta')}
+  </a>
+</section>
