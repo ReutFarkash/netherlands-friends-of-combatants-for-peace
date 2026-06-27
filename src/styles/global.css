@@ -67,6 +67,19 @@
     letter-spacing: normal;
   }
 
+  /*
+    Inline HE/AR snippets on an otherwise LTR page (e.g. the עברית / العربية
+    labels in the language switcher) need a font with those glyphs. :where()
+    keeps specificity at 0 so headings/body still win their own fonts.
+  */
+  :where([lang='he']) {
+    font-family: 'Noto Sans Hebrew', system-ui, sans-serif;
+  }
+
+  :where([lang='ar']) {
+    font-family: 'Noto Sans Arabic', system-ui, sans-serif;
+  }
+
   body {
     background-color: var(--color-bg-cool);
     color: var(--color-ink);
