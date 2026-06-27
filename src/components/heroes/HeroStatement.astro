@@ -1,0 +1,53 @@
+---
+// Option B — "Quiet Statement": a typographic manifesto. Oversized Merriweather
+// carries the whole hero; restraint is the boldness. Cool (not warm-cream) ground
+// + asymmetry + a hairline rule + understated text-link CTAs to stay off the
+// AI-default cream/serif look.
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { useTranslations, type Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const donateUrl =
+  'https://payment-links.mollie.com/en/payment/9Ytth7uKvNipqJVyV7gFj/details';
+const subscribeUrl = `${getRelativeLocaleUrl(locale, 'get-involved')}#subscribe`;
+---
+
+<section class="py-10 sm:py-16">
+  <p class="text-xs font-semibold uppercase tracking-[0.25em] text-brown">
+    {t('home.hero.eyebrow')}
+  </p>
+
+  <h1 class="mt-6 max-w-4xl text-balance text-4xl font-black leading-[1.05] text-teal-deep sm:text-6xl">
+    {t('home.hero.headline')}
+  </h1>
+
+  <div class="mt-10 grid gap-8 border-t border-brown/25 pt-8 sm:grid-cols-[1fr_auto] sm:items-end">
+    <p class="max-w-xl text-lg leading-relaxed text-ink/75">
+      {t('home.mission')}
+    </p>
+    <div class="flex flex-wrap items-center gap-x-8 gap-y-3 text-base">
+      <a
+        href={donateUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group inline-flex items-center gap-2 font-semibold text-teal-deep no-underline"
+      >
+        <span class="group-hover:underline">{t('cta.donate')}</span>
+        <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
+      </a>
+      <a
+        href={subscribeUrl}
+        class="group inline-flex items-center gap-2 font-semibold text-teal-deep no-underline"
+      >
+        <span class="group-hover:underline">{t('cta.subscribe')}</span>
+        <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
+      </a>
+    </div>
+  </div>
+</section>

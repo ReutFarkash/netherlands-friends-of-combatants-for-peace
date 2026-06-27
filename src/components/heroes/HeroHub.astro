@@ -1,0 +1,66 @@
+---
+// Option C — "Action Hub": a compact teal banner + three cards routing to the
+// chapter's real goals (About / Events / Subscribe). Homepage-as-wayfinding
+// rather than a single statement. All card copy reuses existing strings.
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { useTranslations, type Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const donateUrl =
+  'https://payment-links.mollie.com/en/payment/9Ytth7uKvNipqJVyV7gFj/details';
+
+const cards = [
+  { title: t('about.title'), body: t('footer.affiliation'), href: getRelativeLocaleUrl(locale, 'about') },
+  { title: t('events.title'), body: t('events.intro'), href: getRelativeLocaleUrl(locale, 'events') },
+  {
+    title: t('involved.subscribe.title'),
+    body: t('involved.subscribe.body'),
+    href: `${getRelativeLocaleUrl(locale, 'get-involved')}#subscribe`,
+  },
+];
+---
+
+<section>
+  <div class="overflow-hidden rounded-2xl bg-teal-deep px-8 py-10 text-white shadow-sm sm:px-12 sm:py-12">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-sage-lt">
+      {t('home.hero.eyebrow')}
+    </p>
+    <div class="mt-3 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <h1 class="max-w-2xl text-balance text-3xl font-black leading-[1.1] text-white">
+        {t('home.hero.headline')}
+      </h1>
+      <a
+        href={donateUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="shrink-0 rounded-md bg-white px-6 py-3 font-semibold text-teal-deep no-underline hover:bg-sage-lt"
+      >
+        {t('cta.donate')}
+      </a>
+    </div>
+  </div>
+
+  <div class="mt-6 grid gap-5 md:grid-cols-3">
+    {
+      cards.map((c) => (
+        <a
+          href={c.href}
+          class="group flex flex-col rounded-xl border border-sage/40 bg-bg-warm p-6 no-underline transition-colors hover:border-teal"
+        >
+          <h2 class="text-xl text-teal-deep">{c.title}</h2>
+          <p class="mt-2 flex-1 text-sm leading-relaxed text-ink/75">{c.body}</p>
+          <span class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-teal-deep">
+            <span class="group-hover:underline">{t('events.details')}</span>
+            <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
+          </span>
+        </a>
+      ))
+    }
+  </div>
+</section>

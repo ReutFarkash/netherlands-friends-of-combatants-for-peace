@@ -1,0 +1,15 @@
+---
+// PREVIEW ONLY (branch feat/hero-options) — "Photo-led + cards" full homepage.
+// Hero pattern inspired by sister site afcfp.org; image is a placeholder, no
+// borrowed asset. Not linked from nav. Do not merge to main.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroPhoto from '../../components/heroes/HeroPhoto.astro';
+import HubCards from '../../components/heroes/HubCards.astro';
+import InstagramFeed from '../../components/InstagramFeed.astro';
+---
+
+<BaseLayout locale="en" path="">
+  <HeroPhoto locale="en" />
+  <HubCards locale="en" />
+  <InstagramFeed locale="en" />
+</BaseLayout>

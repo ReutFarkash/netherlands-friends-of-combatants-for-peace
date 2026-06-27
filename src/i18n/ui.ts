@@ -21,6 +21,8 @@ export const ui = {
     'cta.donate': 'Donate',
     'cta.subscribe': 'Subscribe',
 
+    'home.hero.eyebrow': 'Netherlands chapter · Combatants for Peace',
+    'home.hero.headline': 'Israelis and Palestinians, side by side.',
     'home.mission':
       'We are based in the Netherlands as one of many worldwide support groups connected to Combatants for Peace. We are working together non-violently to end the occupation and bring peace, equality and security for all people in the area.',
 
@@ -79,6 +81,8 @@ export const ui = {
     'cta.donate': 'Doneer',
     'cta.subscribe': 'Aanmelden',
 
+    'home.hero.eyebrow': 'Nederlandse afdeling · Combatants for Peace',
+    'home.hero.headline': 'Israëli’s en Palestijnen, zij aan zij.',
     'home.mission':
       'Wij zijn gevestigd in Nederland en zijn een van de vele ondersteunende groepen die bij Combatants for Peace zijn aangesloten. Wij werken samen op geweldloze wijze om een einde te maken aan de bezetting en vrede, gelijkheid en veiligheid te brengen voor alle mensen in het gebied.',
 

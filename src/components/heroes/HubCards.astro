@@ -1,0 +1,42 @@
+---
+// Reusable 3-card wayfinding grid (About / Events / Subscribe) to sit below a
+// hero. Card copy reuses existing strings. The photo-card variant (à la the
+// sister site's "4 Domains") would need licensed images — text cards for now.
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { useTranslations, type Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const cards = [
+  { title: t('about.title'), body: t('footer.affiliation'), href: getRelativeLocaleUrl(locale, 'about') },
+  { title: t('events.title'), body: t('events.intro'), href: getRelativeLocaleUrl(locale, 'events') },
+  {
+    title: t('involved.subscribe.title'),
+    body: t('involved.subscribe.body'),
+    href: `${getRelativeLocaleUrl(locale, 'get-involved')}#subscribe`,
+  },
+];
+---
+
+<section class="mt-6 grid gap-5 md:grid-cols-3">
+  {
+    cards.map((c) => (
+      <a
+        href={c.href}
+        class="group flex flex-col rounded-xl border border-sage/40 bg-bg-warm p-6 no-underline transition-colors hover:border-teal"
+      >
+        <h2 class="text-xl text-teal-deep">{c.title}</h2>
+        <p class="mt-2 flex-1 text-sm leading-relaxed text-ink/75">{c.body}</p>
+        <span class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-teal-deep">
+          <span class="group-hover:underline">{t('events.details')}</span>
+          <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
+        </span>
+      </a>
+    ))
+  }
+</section>
