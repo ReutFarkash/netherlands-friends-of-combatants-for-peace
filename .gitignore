@@ -4,6 +4,8 @@ dist/
 .astro/
 # wrangler local state/cache
 .wrangler/
+# screenshot scratch (thumbnails themselves live in public/previews/)
+.screenshot-tmp/
 
 # dependencies
 node_modules/
