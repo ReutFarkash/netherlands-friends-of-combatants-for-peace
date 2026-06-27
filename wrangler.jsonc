@@ -1,9 +1,20 @@
 {
-  // Cloudflare Worker serving the static Astro build (assets-only — no server code).
+  // Cloudflare Worker serving the static Astro build.
   // Workers Builds runs `npm run build` → ./dist, then `npx wrangler deploy` reads this.
+  //
+  // A small Worker (worker/index.ts) runs FIRST on every request to enforce a
+  // pre-launch password gate; once authorised it serves the static assets via
+  // the ASSETS binding. The password lives in the SITE_PASSWORD secret (set in
+  // the Cloudflare dashboard — never committed).
+  //
+  // TO REMOVE AT LAUNCH: delete worker/index.ts and the `main`, `binding`, and
+  // `run_worker_first` lines below (leaving an assets-only Worker again).
   "name": "netherlands-friends-of-combatants-for-peace",
   "compatibility_date": "2026-06-26",
+  "main": "./worker/index.ts",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true
   }
 }

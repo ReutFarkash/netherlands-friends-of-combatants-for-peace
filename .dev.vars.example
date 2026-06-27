@@ -1,0 +1,8 @@
+# Local secrets for `wrangler dev` (copy to .dev.vars, which is gitignored).
+#
+# SITE_PASSWORD is the pre-launch password gate (see worker/index.ts).
+# In production this is set as a Cloudflare secret, NOT here:
+#   Dashboard → Workers & Pages → this Worker → Settings → Variables and Secrets
+#   → Add → type "Secret" → name SITE_PASSWORD.
+# Username is fixed to "cfp" in worker/index.ts.
+SITE_PASSWORD=
