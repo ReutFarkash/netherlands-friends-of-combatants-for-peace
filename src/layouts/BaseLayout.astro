@@ -31,6 +31,13 @@ const faviconHref = `${import.meta.env.BASE_URL}/logo-teal.png`.replace('//', '/
     <meta name="generator" content={Astro.generator} />
   </head>
   <body class="flex min-h-screen flex-col">
+    {/* Dev-showcase banner — this deploy is a work-in-progress review build, not the final site. */}
+    <div class="bg-amber-400 px-4 py-2 text-center text-sm text-ink">
+      🚧 <strong>Development preview</strong> — design drafts for review, not the final site.{' '}
+      <a href={`${import.meta.env.BASE_URL}/dev`.replace('//', '/')} class="font-semibold text-ink underline">
+        View all previews →
+      </a>
+    </div>
     <Header locale={locale} path={path} />
     <main class="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
       <slot />

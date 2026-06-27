@@ -1,0 +1,83 @@
+---
+// PREVIEW ONLY — "Common Ground" hero (the feat/hero-redesign option), surfaced
+// here as a route so it's viewable from the one shared URL without replacing the
+// real homepage. Do not treat as final.
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import InstagramFeed from '../../components/InstagramFeed.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const locale = 'en';
+const t = useTranslations(locale);
+const donateUrl =
+  'https://payment-links.mollie.com/en/payment/9Ytth7uKvNipqJVyV7gFj/details';
+const subscribeUrl = `${getRelativeLocaleUrl(locale, 'get-involved')}#subscribe`;
+---
+
+<BaseLayout locale={locale} path="">
+  <section class="hero overflow-hidden rounded-2xl shadow-sm">
+    <div class="hero-top bg-teal-deep px-6 py-14 text-white sm:px-12 sm:py-20">
+      <p class="hero-eyebrow text-xs font-semibold uppercase tracking-[0.2em] text-sage-lt">
+        {t('home.hero.eyebrow')}
+      </p>
+      <h1
+        class="hero-headline mt-3 max-w-3xl text-balance text-3xl font-black leading-[1.1] text-white sm:text-5xl"
+      >
+        {t('home.hero.headline')}
+      </h1>
+    </div>
+
+    <div class="hero-seam" aria-hidden="true"></div>
+
+    <div class="bg-bg-warm px-6 py-10 text-ink sm:px-12">
+      <p class="max-w-2xl text-lg leading-relaxed text-ink/80">{t('home.mission')}</p>
+      <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+        <a
+          href={donateUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-md bg-teal-deep px-6 py-3 font-semibold text-white no-underline hover:bg-teal"
+        >
+          {t('cta.donate')}
+        </a>
+        <a
+          href={subscribeUrl}
+          class="group inline-flex items-center gap-2 font-semibold text-teal-deep no-underline"
+        >
+          <span class="group-hover:underline">{t('cta.subscribe')}</span>
+          <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <InstagramFeed locale={locale} />
+</BaseLayout>
+
+<style>
+  .hero-seam {
+    height: 3px;
+    background-color: var(--color-sage-lt);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-eyebrow,
+    .hero-headline {
+      animation: hero-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .hero-headline {
+      animation-delay: 0.08s;
+    }
+    .hero-seam {
+      transform-origin: left;
+      animation: hero-draw 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+    }
+  }
+  @keyframes hero-rise {
+    from { opacity: 0; transform: translateY(0.75rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes hero-draw {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+</style>
