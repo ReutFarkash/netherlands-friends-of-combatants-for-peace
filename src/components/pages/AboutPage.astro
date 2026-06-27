@@ -26,6 +26,20 @@ const explore: { key: UIKey; slug: string }[] = [
       {t('about.lead')}<Prov type="ai" note="grounded in the chapter's own mission wording" />
     </p>
 
+    {/* Quick links to the movement pages — kept near the top so they aren't missed. */}
+    <nav class="mt-6 flex flex-wrap gap-3" aria-label={t('about.exploreTitle')}>
+      {
+        explore.map((e) => (
+          <a
+            href={getRelativeLocaleUrl(locale, e.slug)}
+            class="inline-block rounded-md border border-teal-deep/30 px-4 py-2 text-sm font-semibold text-teal-deep no-underline hover:bg-teal-deep hover:text-white"
+          >
+            {t(e.key)}
+          </a>
+        ))
+      }
+    </nav>
+
     <h2 class="mt-10 text-2xl">{t('about.movementTitle')}</h2>
     <p class="mt-3 text-ink/80">
       {t('about.movementBody')}<Prov type="ext" note="movement description — Wikipedia + org doc" />
@@ -35,23 +49,5 @@ const explore: { key: UIKey; slug: string }[] = [
     <p class="mt-3 text-ink/80">
       {t('about.chapterBody')}<Prov type="ai" note="chapter framing — confirm with Roni" />
     </p>
-
-    <h2 class="mt-10 text-sm font-semibold uppercase tracking-wide text-brown">
-      {t('about.exploreTitle')}
-    </h2>
-    <ul class="mt-3 flex flex-wrap gap-3">
-      {
-        explore.map((e) => (
-          <li>
-            <a
-              href={getRelativeLocaleUrl(locale, e.slug)}
-              class="inline-block rounded-md border border-teal-deep/30 px-4 py-2 text-teal-deep no-underline hover:bg-teal-deep hover:text-white"
-            >
-              {t(e.key)}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
   </article>
 </BaseLayout>

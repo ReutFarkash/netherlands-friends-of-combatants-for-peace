@@ -68,6 +68,17 @@
 }
 
 /*
+  Hebrew + Arabic: the brand serif (Merriweather) doesn't cover these scripts,
+  so use a covering system stack for both headings and body on RTL locales.
+  (Draft — a dedicated webfont like Frank Ruhl Libre / Noto can be added later.)
+*/
+[lang='he'],
+[lang='ar'] {
+  --font-serif: system-ui, 'Noto Sans Hebrew', 'Noto Sans Arabic', 'Segoe UI', sans-serif;
+  --font-sans: system-ui, 'Noto Sans Hebrew', 'Noto Sans Arabic', 'Segoe UI', sans-serif;
+}
+
+/*
   Dev wrapper — the default view is the clean public site. Everything dev
   (banner, translation notes, provenance badges) is hidden until <html> has
   `dev-on`, toggled by the fixed Dev/Public control. At launch the whole

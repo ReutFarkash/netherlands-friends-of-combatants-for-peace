@@ -30,6 +30,8 @@ const shots = [
   ['/preview/hub/', 'hub'],
   ['/', 'home'],
   ['/nl/', 'home-nl'],
+  ['/he/', 'home-he'],
+  ['/ar/', 'home-ar'],
   ['/about/', 'about'],
   ['/our-story/', 'our-story'],
   ['/values/', 'values'],

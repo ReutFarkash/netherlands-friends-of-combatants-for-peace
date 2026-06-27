@@ -47,6 +47,13 @@ const sections = [
       { title: 'News', href: '/news', img: 'news', desc: 'Instagram-fed, no manual upkeep.' },
     ],
   },
+  {
+    group: 'Multilingual — 4 languages (⚠️ AI draft, native review needed)',
+    items: [
+      { title: 'Hebrew · עברית', href: '/he', img: 'home-he', desc: 'RTL homepage, fully translated. AI machine-translation — loaded terms (occupation/Nakba) need native review. Deeper pages: Hebrew chrome, English body.' },
+      { title: 'Arabic · العربية', href: '/ar', img: 'home-ar', desc: 'RTL homepage, fully translated. AI machine-translation — needs native review. Deeper pages: Arabic chrome, English body.' },
+    ],
+  },
 ];
 ---
 
@@ -99,9 +106,11 @@ const sections = [
     }
 
     <p class="mt-10 rounded-lg border border-brown/25 bg-bg-warm p-4 text-sm text-ink/70">
-      A Hebrew + Arabic (RTL) multilingual draft also exists on a separate branch
-      (AI machine-translation, pending native-speaker review). Ask Reut for that link if you'd
-      like to see the 4-language idea.
+      <strong>On the Hebrew &amp; Arabic versions:</strong> these are an <em>AI machine-translation
+      draft</em> — the homepage and site chrome (nav, buttons, footer) are translated; the newer
+      content pages still show their English body. Loaded or contested terms — occupation
+      (כיבוש / الاحتلال), Nakba — <strong>must be reviewed by native speakers</strong> before any of
+      this goes live. Shown so the chapter can decide whether they want a 4-language site at all.
     </p>
   </section>
 </BaseLayout>

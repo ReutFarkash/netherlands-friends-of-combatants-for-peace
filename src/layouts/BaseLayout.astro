@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { useTranslations, type Locale } from '../i18n/ui';
+import { useTranslations, isRtl, type Locale } from '../i18n/ui';
 
 interface Props {
   locale: Locale;
@@ -21,7 +21,7 @@ const faviconHref = `${import.meta.env.BASE_URL}/logo-teal.png`.replace('//', '/
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={locale} dir={isRtl(locale) ? 'rtl' : 'ltr'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

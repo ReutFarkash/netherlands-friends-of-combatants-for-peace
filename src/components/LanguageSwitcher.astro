@@ -19,8 +19,8 @@ const locales = Object.keys(languages) as Locale[];
       <>
         {i > 0 && <span aria-hidden="true" class="text-white/40">|</span>}
         {loc === locale ? (
-          <span class="font-semibold text-white" aria-current="true">
-            {loc.toUpperCase()}
+          <span class="font-semibold text-white" aria-current="true" lang={loc}>
+            {languages[loc]}
           </span>
         ) : (
           <a
@@ -29,7 +29,7 @@ const locales = Object.keys(languages) as Locale[];
             hreflang={loc}
             lang={loc}
           >
-            {loc.toUpperCase()}
+            {languages[loc]}
           </a>
         )}
       </>

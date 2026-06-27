@@ -1,11 +1,20 @@
-// UI strings per locale. Keep keys identical across locales.
+// UI strings per locale. EN + NL are complete; HE + AR are a partial AI
+// machine-translation draft (chrome + homepage), pending native review — keys
+// they don't define fall back to English (see useTranslations).
 export const languages = {
   en: 'English',
   nl: 'Nederlands',
+  he: 'עברית',
+  ar: 'العربية',
 } as const;
 
 export type Locale = keyof typeof languages;
 export const defaultLocale: Locale = 'en';
+
+// Hebrew + Arabic render right-to-left.
+export const rtlLocales = ['he', 'ar'] as const;
+export const isRtl = (locale: Locale): boolean =>
+  (rtlLocales as readonly string[]).includes(locale);
 
 export const ui = {
   en: {
@@ -330,12 +339,138 @@ export const ui = {
     'footer.credit': 'Gemaakt door',
     'language.switch': 'Taal',
   },
+
+  // ⚠️ Hebrew — AI machine-translation draft (chrome + homepage), native review
+  // pending. Untranslated keys (the new content-page bodies) fall back to EN.
+  he: {
+    'site.title': 'ידידי לוחמים לשלום בהולנד',
+    'site.shortTitle': 'ידידי לוחמים לשלום',
+
+    'nav.home': 'בית',
+    'nav.about': 'אודות',
+    'nav.overview': 'סקירה',
+    'nav.ourStory': 'הסיפור שלנו',
+    'nav.values': 'הערכים שלנו',
+    'nav.whatWeDo': 'מה אנחנו עושים',
+    'nav.team': 'הצוות',
+    'nav.events': 'אירועים',
+    'nav.news': 'חדשות',
+    'nav.getInvolved': 'הצטרפו',
+    'nav.contact': 'צרו קשר',
+    'nav.menu': 'תפריט',
+    'nav.close': 'סגירה',
+
+    'cta.donate': 'תרומה',
+    'cta.subscribe': 'הרשמה',
+
+    'home.hero.eyebrow': 'הסניף ההולנדי · לוחמים לשלום',
+    'home.hero.headline': 'ישראלים ופלסטינים, זה לצד זה.',
+    'home.mission':
+      'אנו פועלים בהולנד כאחת מקבוצות התמיכה הרבות ברחבי העולם הקשורות לתנועת לוחמים לשלום. אנו פועלים יחד בדרכים לא־אלימות כדי לשים קץ לכיבוש ולהביא שלום, שוויון וביטחון לכל בני האדם באזור.',
+
+    'home.instagram.title': 'מהאינסטגרם שלנו',
+    'home.instagram.body':
+      'עקבו אחר ‎@nlfcfpeace‎ לעדכונים, פעולות ואירועים קרובים.',
+    'home.instagram.cta': 'עקבו באינסטגרם',
+
+    'events.title': 'אירועים',
+    'events.intro': 'מפגשים, טקסים ופעולות — קרובים ואחרונים.',
+    'events.empty': 'אין אירועים מתוכננים כעת — בקרו שוב בקרוב.',
+    'events.upcoming': 'קרובים',
+    'events.past': 'אירועים שהיו',
+    'events.dateTbc': 'התאריך טרם נקבע',
+    'events.locationLabel': 'מיקום',
+    'events.details': 'פרטים',
+
+    'involved.title': 'הצטרפו',
+    'involved.subscribe.title': 'הרשמה לרשימת התפוצה',
+    'involved.subscribe.body':
+      'הצטרפו לרשימת התפוצה שלנו כדי לשמוע על אירועים, פעולות ודרכים לתמוך בתנועה.',
+    'involved.donate.title': 'תרומה',
+    'involved.donate.body':
+      'תרומתכם מסייעת לקיים את עבודתנו. התרומות מעובדות באופן מאובטח באמצעות Mollie.',
+
+    'contact.title': 'צרו קשר',
+    'contact.intro': 'צרו קשר או עקבו אחרינו ברשתות החברתיות.',
+    'contact.emailLabel': 'אימייל',
+    'contact.followLabel': 'עקבו אחרינו',
+
+    'footer.affiliation':
+      'קבוצת תמיכה עצמאית המזוהה עם תנועת לוחמים לשלום.',
+    'footer.parentMovement': 'התנועה',
+    'footer.credit': 'האתר נבנה על ידי',
+    'language.switch': 'שפה',
+  },
+
+  // ⚠️ Arabic — AI machine-translation draft (chrome + homepage), native review
+  // pending. Untranslated keys (the new content-page bodies) fall back to EN.
+  ar: {
+    'site.title': 'أصدقاء مقاتلون من أجل السلام في هولندا',
+    'site.shortTitle': 'أصدقاء مقاتلون من أجل السلام',
+
+    'nav.home': 'الرئيسية',
+    'nav.about': 'من نحن',
+    'nav.overview': 'نظرة عامة',
+    'nav.ourStory': 'قصتنا',
+    'nav.values': 'قيمنا',
+    'nav.whatWeDo': 'ما الذي نقوم به',
+    'nav.team': 'الفريق',
+    'nav.events': 'الفعاليات',
+    'nav.news': 'الأخبار',
+    'nav.getInvolved': 'شارك معنا',
+    'nav.contact': 'اتصلوا بنا',
+    'nav.menu': 'القائمة',
+    'nav.close': 'إغلاق',
+
+    'cta.donate': 'تبرّع',
+    'cta.subscribe': 'اشترك',
+
+    'home.hero.eyebrow': 'الفرع الهولندي · مقاتلون من أجل السلام',
+    'home.hero.headline': 'إسرائيليون وفلسطينيون، جنبًا إلى جنب.',
+    'home.mission':
+      'نعمل في هولندا كواحدة من مجموعات الدعم العديدة حول العالم المرتبطة بحركة مقاتلون من أجل السلام. نعمل معًا بالوسائل اللاعنفية لإنهاء الاحتلال وتحقيق السلام والمساواة والأمن لجميع الناس في المنطقة.',
+
+    'home.instagram.title': 'من حسابنا على إنستغرام',
+    'home.instagram.body':
+      'تابعوا ‎@nlfcfpeace‎ للحصول على التحديثات والأنشطة والفعاليات القادمة.',
+    'home.instagram.cta': 'تابعونا على إنستغرام',
+
+    'events.title': 'الفعاليات',
+    'events.intro': 'لقاءات ومراسم وأنشطة — قادمة وحديثة.',
+    'events.empty': 'لا توجد فعاليات مجدولة حاليًا — عودوا قريبًا.',
+    'events.upcoming': 'القادمة',
+    'events.past': 'فعاليات سابقة',
+    'events.dateTbc': 'موعد لم يُؤكَّد بعد',
+    'events.locationLabel': 'المكان',
+    'events.details': 'التفاصيل',
+
+    'involved.title': 'شارك معنا',
+    'involved.subscribe.title': 'اشترك في النشرة',
+    'involved.subscribe.body':
+      'اشتركوا في نشرتنا البريدية لتصلكم أخبار الفعاليات والأنشطة وطرق دعم الحركة.',
+    'involved.donate.title': 'تبرّع',
+    'involved.donate.body':
+      'تساعد مساهمتكم في استمرار عملنا. تتم معالجة التبرعات بأمان عبر Mollie.',
+
+    'contact.title': 'اتصلوا بنا',
+    'contact.intro': 'تواصلوا معنا أو تابعونا على وسائل التواصل الاجتماعي.',
+    'contact.emailLabel': 'البريد الإلكتروني',
+    'contact.followLabel': 'تابعونا',
+
+    'footer.affiliation':
+      'مجموعة دعم مستقلة منتسبة إلى حركة مقاتلون من أجل السلام.',
+    'footer.parentMovement': 'الحركة الأم',
+    'footer.credit': 'الموقع من إنشاء',
+    'language.switch': 'اللغة',
+  },
 } as const;
 
 export type UIKey = keyof (typeof ui)['en'];
 
 export function useTranslations(locale: Locale) {
   return function t(key: UIKey): string {
-    return ui[locale][key] ?? ui[defaultLocale][key];
+    // HE/AR are partial drafts — any key they don't define falls back to English.
+    const dict = ui[locale] as Partial<Record<UIKey, string>>;
+    return dict[key] ?? ui[defaultLocale][key];
   };
 }
