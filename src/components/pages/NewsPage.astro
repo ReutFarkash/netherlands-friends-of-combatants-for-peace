@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import InstagramFeed from '../InstagramFeed.astro';
+import Prov from '../Prov.astro';
+import { useTranslations, type Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<BaseLayout locale={locale} path="news" title={t('news.title')}>
+  <div class="mx-auto max-w-3xl text-center">
+    <h1 class="text-3xl sm:text-4xl">{t('news.title')}</h1>
+    <p class="mt-6 text-lg text-ink/85">{t('news.lead')}<Prov type="ai" /></p>
+  </div>
+  <InstagramFeed locale={locale} />
+</BaseLayout>

@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Prov from '../Prov.astro';
+import { useTranslations, type Locale, type UIKey } from '../../i18n/ui';
+
+const SOURCE: Record<string, 'ext' | 'source'> = {
+  ceremonies: 'ext', // attendance figures + ceremony detail — Wikipedia
+  education: 'source',
+  ground: 'source',
+  advocacy: 'source',
+};
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const sections = ['ceremonies', 'education', 'ground', 'advocacy'] as const;
+---
+
+<BaseLayout locale={locale} path="what-we-do" title={t('do.title')}>
+  <article class="mx-auto max-w-2xl">
+    <h1 class="text-3xl sm:text-4xl">{t('do.title')}</h1>
+    <p class="mt-6 text-lg text-ink/85">{t('do.lead')}<Prov type="ai" /></p>
+
+    {
+      sections.map((s) => (
+        <section class="mt-8">
+          <h2 class="text-2xl">{t(`do.${s}.title` as UIKey)}</h2>
+          <p class="mt-3 text-ink/80">
+            {t(`do.${s}.body` as UIKey)}
+            <Prov type={SOURCE[s]} />
+          </p>
+        </section>
+      ))
+    }
+
+    <section class="mt-10 rounded-md border-l-4 border-sage bg-bg-warm px-4 py-4">
+      <h2 class="text-lg text-brown">{t('do.hereTitle')}</h2>
+      <p class="mt-2 text-ink/80">{t('do.hereBody')}<Prov type="ai" /></p>
+    </section>
+  </article>
+</BaseLayout>

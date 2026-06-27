@@ -1,0 +1,39 @@
+---
+/**
+ * Provenance badge — part of the dev/review wrapper.
+ *
+ * Drop next to any string to mark where it came from. Hidden in the default
+ * public view; shown when the dev banner's "Show sources" toggle is on.
+ *
+ *   <Prov type="ext" />            Wikipedia / AFCFP (external, cited)
+ *   <Prov type="source" />         Chapter's own doc / published wording
+ *   <Prov type="ai" />             AI-written connective copy
+ *   <Prov type="trans" />          AI machine-translation
+ *   <Prov type="tbc" note="..." /> Fact/link still to confirm
+ */
+type ProvType = 'ai' | 'trans' | 'source' | 'ext' | 'tbc';
+
+interface Props {
+  type: ProvType;
+  /** Optional extra detail shown on hover. */
+  note?: string;
+}
+
+const { type, note } = Astro.props;
+
+const META: Record<ProvType, { cls: string; label: string }> = {
+  ai: { cls: 'prov-ai', label: '✍️ AI-written' },
+  trans: { cls: 'prov-trans', label: '🌐 AI-translated' },
+  source: { cls: 'prov-source', label: '📄 Chapter doc' },
+  ext: { cls: 'prov-ext', label: '📚 Wikipedia / AFCFP' },
+  tbc: { cls: 'prov-tbc', label: '❓ Needs confirmation' },
+};
+
+const m = META[type];
+---
+
+<span
+  class={`prov-badge ${m.cls}`}
+  data-prov={type}
+  title={note ? `${m.label} — ${note}` : m.label}
+  role="note">{m.label}</span>

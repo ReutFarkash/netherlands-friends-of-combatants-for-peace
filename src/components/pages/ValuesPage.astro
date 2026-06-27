@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Prov from '../Prov.astro';
+import { useTranslations, type Locale, type UIKey } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const values = [
+  'nonviolence',
+  'coresistance',
+  'liberation',
+  'justice',
+  'humanity',
+  'transformation',
+] as const;
+---
+
+<BaseLayout locale={locale} path="values" title={t('values.title')}>
+  <div class="mx-auto max-w-4xl">
+    <h1 class="text-3xl sm:text-4xl">{t('values.title')}</h1>
+    <p class="mt-6 max-w-2xl text-lg text-ink/85">
+      {t('values.lead')}<Prov type="source" note="the movement's own six values — Roni's org doc (Collective Liberation line echoes AFCFP)" />
+    </p>
+
+    <ol class="mt-8 grid gap-5 sm:grid-cols-2">
+      {
+        values.map((v, i) => (
+          <li class="rounded-lg border border-sage/30 bg-white p-5">
+            <h2 class="text-xl text-teal-deep">
+              {i + 1}. {t(`values.${v}.title` as UIKey)}
+            </h2>
+            <p class="mt-2 text-ink/80">{t(`values.${v}.body` as UIKey)}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</BaseLayout>

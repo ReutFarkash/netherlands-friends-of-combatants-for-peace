@@ -29,19 +29,59 @@ const faviconHref = `${import.meta.env.BASE_URL}/logo-teal.png`.replace('//', '/
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />
     <meta name="generator" content={Astro.generator} />
+    {/* Apply the "show sources" preference before paint (no flash). Dev wrapper only. */}
+    <script is:inline>
+      if (localStorage.getItem('nlfcfp-prov') === '1')
+        document.documentElement.classList.add('prov-on');
+    </script>
   </head>
   <body class="flex min-h-screen flex-col">
     {/* Dev-showcase banner — this deploy is a work-in-progress review build, not the final site. */}
-    <div class="bg-amber-400 px-4 py-2 text-center text-sm text-ink">
-      🚧 <strong>Development preview</strong> — design drafts for review, not the final site.{' '}
+    <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-amber-400 px-4 py-2 text-center text-sm text-ink">
+      <span>
+        🚧 <strong>Development preview</strong> — drafts for review, not the final site.
+      </span>
       <a href={`${import.meta.env.BASE_URL}/dev`.replace('//', '/')} class="font-semibold text-ink underline">
         View all previews →
       </a>
+      <button
+        type="button"
+        id="prov-toggle"
+        class="rounded border border-ink/40 px-2 py-0.5 font-semibold text-ink hover:bg-ink/10"
+        aria-pressed="false"
+      >
+        Show sources
+      </button>
     </div>
+    {
+      locale !== 'en' && (
+        <div class="prov-translation bg-violet-100 px-4 py-2 text-center text-sm text-violet-900">
+          🌐 This page is an AI machine-translation — pending native review.
+        </div>
+      )
+    }
     <Header locale={locale} path={path} />
     <main class="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
       <slot />
     </main>
     <Footer locale={locale} />
+    {/* Dev wrapper: toggle the "show sources" provenance view, persisted across pages. */}
+    <script is:inline>
+      (() => {
+        const btn = document.getElementById('prov-toggle');
+        if (!btn) return;
+        const sync = () => {
+          const on = document.documentElement.classList.contains('prov-on');
+          btn.textContent = on ? 'Hide sources' : 'Show sources';
+          btn.setAttribute('aria-pressed', String(on));
+        };
+        sync();
+        btn.addEventListener('click', () => {
+          const on = document.documentElement.classList.toggle('prov-on');
+          localStorage.setItem('nlfcfp-prov', on ? '1' : '0');
+          sync();
+        });
+      })();
+    </script>
   </body>
 </html>

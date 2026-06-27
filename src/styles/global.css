@@ -66,3 +66,55 @@
     outline-offset: 2px;
   }
 }
+
+/*
+  Provenance tags — part of the dev/review wrapper only.
+  Hidden in the default public view; revealed when <html> has `prov-on`
+  (toggled by the "Show sources" button in the dev banner). At launch the
+  dev banner is removed and these simply never show — the spans are inert.
+*/
+.prov-badge {
+  display: none;
+}
+html.prov-on .prov-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid currentColor;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.5;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.prov-ai {
+  color: #b45309;
+  background: #fffbeb;
+} /* amber — AI-written */
+.prov-trans {
+  color: #6d28d9;
+  background: #f5f3ff;
+} /* violet — AI-translated */
+.prov-source {
+  color: #036564;
+  background: #ecfdf5;
+} /* teal — chapter doc */
+.prov-ext {
+  color: #1d4ed8;
+  background: #eff6ff;
+} /* blue — Wikipedia / AFCFP */
+.prov-tbc {
+  color: #be123c;
+  background: #fff1f2;
+} /* rose — needs confirmation */
+
+/* Page-level translation note (dev mode, non-English pages). */
+.prov-translation {
+  display: none;
+}
+html.prov-on .prov-translation {
+  display: block;
+}

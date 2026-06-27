@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Prov from '../Prov.astro';
 import { useTranslations, type Locale } from '../../i18n/ui';
 
 interface Props {
@@ -23,11 +24,13 @@ const socials = [
 <BaseLayout locale={locale} path="contact" title={t('contact.title')}>
   <article class="mx-auto max-w-2xl">
     <h1 class="text-3xl sm:text-4xl">{t('contact.title')}</h1>
-    <p class="mt-4 text-lg text-ink/80">{t('contact.intro')}</p>
+    <p class="mt-4 text-lg text-ink/80">{t('contact.intro')}<Prov type="ai" /></p>
+    <p class="mt-4 text-ink/80">{t('contact.bring')}<Prov type="ai" /></p>
 
     <div class="mt-8">
       <h2 class="text-lg">{t('contact.emailLabel')}</h2>
       <a class="text-teal-deep" href={`mailto:${email}`}>{email}</a>
+      <Prov type="tbc" note="confirm this is the address the chapter wants public" />
     </div>
 
     <div class="mt-8">
@@ -48,6 +51,7 @@ const socials = [
           ))
         }
       </ul>
+      <Prov type="source" note="links from the chapter's own profiles" />
     </div>
   </article>
 </BaseLayout>

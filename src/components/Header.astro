@@ -15,23 +15,40 @@ const t = useTranslations(locale);
 // White logo lives in public/ — prefix with base so it resolves under the sub-path.
 const logoSrc = `${import.meta.env.BASE_URL}/logo-white.png`.replace('//', '/');
 
-const navItems: { key: UIKey; slug: string }[] = [
+type NavLeaf = { key: UIKey; slug: string };
+type NavItem = NavLeaf & { children?: NavLeaf[] };
+
+const navItems: NavItem[] = [
   { key: 'nav.home', slug: '' },
-  { key: 'nav.about', slug: 'about' },
+  {
+    key: 'nav.about',
+    slug: 'about',
+    children: [
+      { key: 'nav.overview', slug: 'about' },
+      { key: 'nav.ourStory', slug: 'our-story' },
+      { key: 'nav.values', slug: 'values' },
+      { key: 'nav.whatWeDo', slug: 'what-we-do' },
+      { key: 'nav.team', slug: 'team' },
+    ],
+  },
   { key: 'nav.events', slug: 'events' },
+  { key: 'nav.news', slug: 'news' },
   { key: 'nav.getInvolved', slug: 'get-involved' },
   { key: 'nav.contact', slug: 'contact' },
 ];
 
 const isActive = (slug: string) => slug === path;
+const isParentActive = (item: NavItem) =>
+  isActive(item.slug) || (item.children?.some((c) => isActive(c.slug)) ?? false);
+const url = (slug: string) => getRelativeLocaleUrl(locale, slug);
 ---
 
 <header class="bg-teal-deep text-white">
   <div
-    class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-3"
+    class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3"
   >
     <a
-      href={getRelativeLocaleUrl(locale, '')}
+      href={url('')}
       class="flex items-center gap-3 text-white hover:text-white"
     >
       <img
@@ -47,27 +64,161 @@ const isActive = (slug: string) => slug === path;
     </a>
 
     <div class="flex items-center gap-6">
-      <nav aria-label="Primary">
-        <ul class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm">
+      {/* Desktop nav */}
+      <nav class="hidden md:block" aria-label="Primary">
+        <ul class="flex items-center gap-x-5 text-sm">
           {
-            navItems.map((item) => (
-              <li>
-                <a
-                  href={getRelativeLocaleUrl(locale, item.slug)}
-                  class:list={[
-                    'text-white/85 hover:text-white',
-                    isActive(item.slug) && 'border-b-2 border-sage-lt font-semibold text-white',
-                  ]}
-                  aria-current={isActive(item.slug) ? 'page' : undefined}
-                >
-                  {t(item.key)}
-                </a>
-              </li>
-            ))
+            navItems.map((item) =>
+              item.children ? (
+                <li class="group relative">
+                  <a
+                    href={url(item.slug)}
+                    class:list={[
+                      'inline-flex items-center gap-1 text-white/85 hover:text-white',
+                      isParentActive(item) &&
+                        'border-b-2 border-sage-lt font-semibold text-white',
+                    ]}
+                    aria-current={isParentActive(item) ? 'page' : undefined}
+                  >
+                    {t(item.key)}
+                    <svg
+                      class="h-3 w-3 opacity-80"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M2.5 4.5 6 8l3.5-3.5"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </a>
+                  <ul
+                    class="invisible absolute left-0 top-full z-20 mt-2 min-w-48 rounded-md bg-white py-2 text-ink opacity-0 shadow-lg ring-1 ring-black/5 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+                  >
+                    {item.children.map((child) => (
+                      <li>
+                        <a
+                          href={url(child.slug)}
+                          class:list={[
+                            'block px-4 py-2 hover:bg-bg-warm',
+                            isActive(child.slug) &&
+                              'font-semibold text-teal-deep',
+                          ]}
+                          aria-current={isActive(child.slug) ? 'page' : undefined}
+                        >
+                          {t(child.key)}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ) : (
+                <li>
+                  <a
+                    href={url(item.slug)}
+                    class:list={[
+                      'text-white/85 hover:text-white',
+                      isActive(item.slug) &&
+                        'border-b-2 border-sage-lt font-semibold text-white',
+                    ]}
+                    aria-current={isActive(item.slug) ? 'page' : undefined}
+                  >
+                    {t(item.key)}
+                  </a>
+                </li>
+              )
+            )
           }
         </ul>
       </nav>
-      <LanguageSwitcher locale={locale} path={path} />
+
+      <div class="hidden md:block">
+        <LanguageSwitcher locale={locale} path={path} />
+      </div>
+
+      {/* Mobile hamburger */}
+      <button
+        type="button"
+        id="nav-toggle"
+        class="md:hidden inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white/10"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label={t('nav.menu')}
+      >
+        <svg
+          class="h-6 w-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
     </div>
   </div>
+
+  {/* Mobile menu panel */}
+  <nav
+    id="mobile-menu"
+    class="hidden border-t border-white/15 md:hidden"
+    aria-label="Primary mobile"
+  >
+    <ul class="mx-auto max-w-6xl px-4 py-3 text-sm">
+      {
+        navItems.map((item) => (
+          <li class="border-b border-white/10 last:border-0">
+            <a
+              href={url(item.slug)}
+              class:list={[
+                'block py-2.5 text-white/90 hover:text-white',
+                isActive(item.slug) && 'font-semibold text-white',
+              ]}
+              aria-current={isActive(item.slug) ? 'page' : undefined}
+            >
+              {t(item.key)}
+            </a>
+            {item.children && (
+              <ul class="pb-2 pl-4">
+                {item.children
+                  .filter((child) => child.slug !== item.slug)
+                  .map((child) => (
+                    <li>
+                      <a
+                        href={url(child.slug)}
+                        class:list={[
+                          'block py-2 text-white/70 hover:text-white',
+                          isActive(child.slug) && 'font-semibold text-white',
+                        ]}
+                        aria-current={isActive(child.slug) ? 'page' : undefined}
+                      >
+                        {t(child.key)}
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+    <div class="mx-auto max-w-6xl px-4 pb-4">
+      <LanguageSwitcher locale={locale} path={path} />
+    </div>
+  </nav>
 </header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('hidden') === false;
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+</script>

@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { useTranslations, type Locale } from '../../i18n/ui';
+import Prov from '../Prov.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { useTranslations, type Locale, type UIKey } from '../../i18n/ui';
 
 interface Props {
   locale: Locale;
@@ -8,16 +10,48 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = useTranslations(locale);
+
+const explore: { key: UIKey; slug: string }[] = [
+  { key: 'nav.ourStory', slug: 'our-story' },
+  { key: 'nav.values', slug: 'values' },
+  { key: 'nav.whatWeDo', slug: 'what-we-do' },
+  { key: 'nav.team', slug: 'team' },
+];
 ---
 
 <BaseLayout locale={locale} path="about" title={t('about.title')}>
   <article class="mx-auto max-w-2xl">
     <h1 class="text-3xl sm:text-4xl">{t('about.title')}</h1>
-    <p class="mt-6 text-lg text-ink/85">{t('about.placeholder')}</p>
-    <p
-      class="mt-6 rounded-md border-l-4 border-sage bg-bg-warm px-4 py-3 text-sm text-brown"
-    >
-      {t('about.note')}
+    <p class="mt-6 text-lg text-ink/85">
+      {t('about.lead')}<Prov type="ai" note="grounded in the chapter's own mission wording" />
     </p>
+
+    <h2 class="mt-10 text-2xl">{t('about.movementTitle')}</h2>
+    <p class="mt-3 text-ink/80">
+      {t('about.movementBody')}<Prov type="ext" note="movement description — Wikipedia + org doc" />
+    </p>
+
+    <h2 class="mt-8 text-2xl">{t('about.chapterTitle')}</h2>
+    <p class="mt-3 text-ink/80">
+      {t('about.chapterBody')}<Prov type="ai" note="chapter framing — confirm with Roni" />
+    </p>
+
+    <h2 class="mt-10 text-sm font-semibold uppercase tracking-wide text-brown">
+      {t('about.exploreTitle')}
+    </h2>
+    <ul class="mt-3 flex flex-wrap gap-3">
+      {
+        explore.map((e) => (
+          <li>
+            <a
+              href={getRelativeLocaleUrl(locale, e.slug)}
+              class="inline-block rounded-md border border-teal-deep/30 px-4 py-2 text-teal-deep no-underline hover:bg-teal-deep hover:text-white"
+            >
+              {t(e.key)}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </article>
 </BaseLayout>
