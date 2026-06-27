@@ -39,6 +39,9 @@ export const ui = {
     'events.intro':
       'Upcoming and recent gatherings, ceremonies and actions.',
     'events.empty': 'No events are scheduled right now — check back soon.',
+    'events.upcoming': 'Upcoming',
+    'events.past': 'Past events',
+    'events.dateTbc': 'Date to be confirmed',
     'events.locationLabel': 'Location',
     'events.details': 'Details',
 
@@ -94,6 +97,9 @@ export const ui = {
       'Aankomende en recente bijeenkomsten, ceremonies en acties.',
     'events.empty':
       'Er staan momenteel geen activiteiten gepland — kom binnenkort terug.',
+    'events.upcoming': 'Aankomend',
+    'events.past': 'Afgelopen activiteiten',
+    'events.dateTbc': 'Datum nog te bevestigen',
     'events.locationLabel': 'Locatie',
     'events.details': 'Details',
 

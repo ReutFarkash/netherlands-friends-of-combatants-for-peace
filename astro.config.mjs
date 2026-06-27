@@ -2,16 +2,12 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
-// Host-aware base path: GitHub Pages serves under a repo sub-path; Cloudflare
-// (and local dev) serve at root. GitHub Actions sets GITHUB_ACTIONS=true, so we
-// only apply the sub-path there. This keeps both hosts working simultaneously.
-// When a custom domain is added on Cloudflare, base stays '/' (already correct).
-const onGitHubPages = process.env.GITHUB_ACTIONS === 'true';
-
+// Served at root on Cloudflare (and local dev). GitHub Pages (which needed a
+// repo sub-path) was retired on 2026-06-27, so the host-aware base is gone.
+// When a custom domain is added on Cloudflare, base stays '/'.
 // https://astro.build/config
 export default defineConfig({
-  site: onGitHubPages ? 'https://reutfarkash.github.io' : undefined,
-  base: onGitHubPages ? '/netherlands-friends-of-combatants-for-peace' : '/',
+  base: '/',
 
   // English at `/`, Dutch at `/nl/`.
   i18n: {
