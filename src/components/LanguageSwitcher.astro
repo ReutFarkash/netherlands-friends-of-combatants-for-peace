@@ -11,6 +11,17 @@ interface Props {
 
 const { locale, path } = Astro.props;
 const locales = Object.keys(languages) as Locale[];
+
+// Compact switcher labels. EN/NL use their Latin codes; HE uses the standard
+// Israeli short form עב. AR keeps the full native name for now — its short form
+// is an open question pending a native Arabic speaker (see content-provenance).
+// Full names stay available via the `title`/aria for accessibility.
+const shortLabels: Record<Locale, string> = {
+  en: 'EN',
+  nl: 'NL',
+  he: 'עב',
+  ar: 'العربية',
+};
 ---
 
 <nav class="flex items-center gap-2 text-sm" aria-label="Language">
@@ -19,8 +30,13 @@ const locales = Object.keys(languages) as Locale[];
       <>
         {i > 0 && <span aria-hidden="true" class="text-white/40">|</span>}
         {loc === locale ? (
-          <span class="font-semibold text-white" aria-current="true" lang={loc}>
-            {languages[loc]}
+          <span
+            class="font-semibold text-white"
+            aria-current="true"
+            lang={loc}
+            title={languages[loc]}
+          >
+            {shortLabels[loc]}
           </span>
         ) : (
           <a
@@ -28,8 +44,9 @@ const locales = Object.keys(languages) as Locale[];
             href={getRelativeLocaleUrl(loc, path)}
             hreflang={loc}
             lang={loc}
+            title={languages[loc]}
           >
-            {languages[loc]}
+            {shortLabels[loc]}
           </a>
         )}
       </>
