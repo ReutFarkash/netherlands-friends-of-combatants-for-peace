@@ -1,8 +1,11 @@
 ---
-// Option D — "Photo-led" hero. IDEA BORROWED from sister site afcfp.org
-// (full-bleed documentary photo + overlaid words + single CTA). NO sister-site
-// asset is used: the image here is a CSS PLACEHOLDER. A real version needs a
-// photo the chapter owns or has licensed.
+// Option D — "Photo-led" hero. IDEA borrowed from sister site afcfp.org
+// (full-bleed documentary photo + overlaid words + single CTA).
+//
+// IMAGE = TEMPORARY STOCK PLACEHOLDER: "Old olive grove" by Darko B, licensed
+// CC0 (public domain, no attribution required) via Wikimedia Commons. Hotlinked
+// for preview only. PRODUCTION must use a photo the chapter owns or has licensed
+// — see content-provenance. NO sister-site asset is used.
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { useTranslations, type Locale } from '../../i18n/ui';
 
@@ -16,16 +19,24 @@ const t = useTranslations(locale);
 const donateUrl =
   'https://payment-links.mollie.com/en/payment/9Ytth7uKvNipqJVyV7gFj/details';
 const subscribeUrl = `${getRelativeLocaleUrl(locale, 'get-involved')}#subscribe`;
+const heroImg =
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Old_olive_grove_-_Flickr_-_darko149.jpg/3840px-Old_olive_grove_-_Flickr_-_darko149.jpg';
 ---
 
 <section class="relative flex min-h-[26rem] items-end overflow-hidden rounded-2xl shadow-sm sm:min-h-[32rem]">
-  {/* PLACEHOLDER image layer — no real/borrowed photo. Swap for a licensed image. */}
-  <div class="absolute inset-0 bg-gradient-to-br from-teal-deep via-teal to-ink"></div>
-  <div class="absolute inset-0 bg-ink/35"></div>
+  <img
+    src={heroImg}
+    alt="Olive grove"
+    class="absolute inset-0 h-full w-full object-cover"
+    loading="eager"
+  />
+  {/* Overlays for text legibility + brand cohesion (darkest at the text corner). */}
+  <div class="absolute inset-0 bg-gradient-to-tr from-ink/85 via-ink/45 to-transparent"></div>
+  <div class="absolute inset-0 bg-teal-deep/25"></div>
   <span
     class="absolute right-4 top-4 rounded bg-ink/70 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-white/90"
   >
-    Placeholder — chapter photo goes here
+    Stock photo (CC0) — placeholder
   </span>
 
   <div class="relative max-w-3xl p-8 text-white sm:p-12">
@@ -35,7 +46,7 @@ const subscribeUrl = `${getRelativeLocaleUrl(locale, 'get-involved')}#subscribe`
     <h1 class="mt-3 text-balance text-4xl font-black leading-[1.05] text-white drop-shadow sm:text-5xl">
       {t('home.hero.headline')}
     </h1>
-    <p class="mt-4 max-w-xl text-base text-white/90">{t('home.mission')}</p>
+    <p class="mt-4 max-w-xl text-base text-white/90 drop-shadow">{t('home.mission')}</p>
     <div class="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3">
       <a
         href={donateUrl}
