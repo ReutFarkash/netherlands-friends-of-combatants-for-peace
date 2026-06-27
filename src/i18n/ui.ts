@@ -63,6 +63,7 @@ export const ui = {
     'footer.affiliation':
       'An independent supporter group affiliated with Combatants for Peace.',
     'footer.parentMovement': 'Parent movement',
+    'footer.credit': 'Site by',
     'language.switch': 'Language',
   },
   nl: {
@@ -121,6 +122,7 @@ export const ui = {
     'footer.affiliation':
       'Een onafhankelijke steungroep, verbonden aan Combatants for Peace.',
     'footer.parentMovement': 'Moederbeweging',
+    'footer.credit': 'Gemaakt door',
     'language.switch': 'Taal',
   },
 } as const;
