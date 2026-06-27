@@ -6,6 +6,18 @@
 @import '@fontsource/merriweather/900.css';
 
 /*
+  Hebrew + Arabic webfonts — the Latin faces above carry no HE/AR glyphs.
+  Noto Serif Hebrew / Noto Naskh Arabic for headings, Noto Sans for body.
+  Applied per-locale via the html[lang=…] overrides below.
+*/
+@import '@fontsource/noto-serif-hebrew/400.css';
+@import '@fontsource/noto-serif-hebrew/700.css';
+@import '@fontsource/noto-sans-hebrew/400.css';
+@import '@fontsource/noto-naskh-arabic/400.css';
+@import '@fontsource/noto-naskh-arabic/700.css';
+@import '@fontsource/noto-sans-arabic/400.css';
+
+/*
   Brand theme tokens. Tailwind v4 reads these from @theme and exposes them
   as utilities (e.g. bg-teal-deep, text-ink) and CSS variables (var(--color-teal)).
 */
@@ -33,6 +45,26 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+
+  /*
+    Per-locale fonts for the RTL languages. CSS custom properties cascade, so
+    overriding --font-serif / --font-sans on the <html lang> element re-points
+    every `font-serif` / `font-sans` utility for that locale.
+  */
+  html[lang='he'] {
+    --font-serif: 'Noto Serif Hebrew', 'Merriweather', serif;
+    --font-sans: 'Noto Sans Hebrew', system-ui, sans-serif;
+  }
+
+  html[lang='ar'] {
+    --font-serif: 'Noto Naskh Arabic', 'Merriweather', serif;
+    --font-sans: 'Noto Sans Arabic', system-ui, sans-serif;
+  }
+
+  /* Arabic connected script breaks under letter-spacing; neutralise it in RTL. */
+  [dir='rtl'] .tracking-wide {
+    letter-spacing: normal;
   }
 
   body {

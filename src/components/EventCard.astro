@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { useTranslations, type Locale } from '../i18n/ui';
+import { useTranslations, isRtl, type Locale } from '../i18n/ui';
 
 interface Props {
   event: CollectionEntry<'events'>;
@@ -10,11 +10,20 @@ interface Props {
 const { event, locale } = Astro.props;
 const t = useTranslations(locale);
 
-const dateFormatter = new Intl.DateTimeFormat(locale === 'nl' ? 'nl-NL' : 'en-GB', {
+const dateLocales: Record<Locale, string> = {
+  en: 'en-GB',
+  nl: 'nl-NL',
+  he: 'he-IL',
+  ar: 'ar',
+};
+const dateFormatter = new Intl.DateTimeFormat(dateLocales[locale], {
   day: 'numeric',
   month: 'long',
   year: 'numeric',
 });
+
+// Arrow points toward the reading direction.
+const arrow = isRtl(locale) ? '←' : '→';
 ---
 
 <li class="rounded-lg border border-sage/30 bg-white p-6 shadow-sm">
@@ -45,7 +54,7 @@ const dateFormatter = new Intl.DateTimeFormat(locale === 'nl' ? 'nl-NL' : 'en-GB
         target="_blank"
         rel="noopener noreferrer"
       >
-        {t('events.details')} →
+        {t('events.details')} {arrow}
       </a>
     )
   }

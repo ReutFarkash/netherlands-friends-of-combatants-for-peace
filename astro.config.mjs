@@ -9,9 +9,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   base: '/',
 
-  // English at `/`, Dutch at `/nl/`.
+  // English at `/`, Dutch at `/nl/`, Hebrew at `/he/`, Arabic at `/ar/` (both RTL).
   i18n: {
-    locales: ['en', 'nl'],
+    locales: ['en', 'nl', 'he', 'ar'],
     defaultLocale: 'en',
     routing: {
       prefixDefaultLocale: false,

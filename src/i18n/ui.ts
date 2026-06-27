@@ -2,7 +2,14 @@
 export const languages = {
   en: 'English',
   nl: 'Nederlands',
+  he: 'עברית',
+  ar: 'العربية',
 } as const;
+
+/** Right-to-left locales. */
+export const rtlLocales = ['he', 'ar'] as const;
+export const isRtl = (locale: Locale): boolean =>
+  (rtlLocales as readonly string[]).includes(locale);
 
 export type Locale = keyof typeof languages;
 export const defaultLocale: Locale = 'en';
@@ -124,6 +131,128 @@ export const ui = {
     'footer.parentMovement': 'Moederbeweging',
     'footer.credit': 'Gemaakt door',
     'language.switch': 'Taal',
+  },
+
+  // ⚠️ AI-DRAFT TRANSLATION — pending native-speaker review by the chapter.
+  // Politically sensitive terms (occupation/כיבוש, Nakba/נכבה) need confirming.
+  // Movement name uses its official Hebrew form "לוחמים לשלום".
+  he: {
+    'site.title': 'ידידי לוחמים לשלום בהולנד',
+    'site.shortTitle': 'ידידי לוחמים לשלום',
+
+    'nav.home': 'בית',
+    'nav.about': 'אודות',
+    'nav.events': 'אירועים',
+    'nav.getInvolved': 'הצטרפו',
+    'nav.contact': 'צרו קשר',
+
+    'cta.donate': 'תרומה',
+    'cta.subscribe': 'הרשמה',
+
+    'home.mission':
+      'אנו פועלים בהולנד כאחת מקבוצות התמיכה הרבות ברחבי העולם הקשורות לתנועת לוחמים לשלום. אנו פועלים יחד בדרכים לא־אלימות כדי לשים קץ לכיבוש ולהביא שלום, שוויון וביטחון לכל בני האדם באזור.',
+
+    'home.instagram.title': 'מהאינסטגרם שלנו',
+    'home.instagram.body':
+      'עקבו אחר ‎@nlfcfpeace‎ לעדכונים, פעולות ואירועים קרובים.',
+    'home.instagram.cta': 'עקבו באינסטגרם',
+
+    'about.title': 'אודות',
+    'about.placeholder':
+      'טקסט זמני. לוחמים לשלום היא תנועה של ישראלים ופלסטינים שהניחו את נשקם ופועלים יחד בדרכים לא־אלימות נגד הכיבוש ולמען עתיד של שלום, שוויון וביטחון. קבוצת הידידים בהולנד היא אחת מקבוצות התמיכה הרבות בעולם הקשורות לתנועה.',
+    'about.note':
+      'זהו טקסט זמני שיוחלף במילים של הקבוצה עצמה.',
+
+    'events.title': 'אירועים',
+    'events.intro': 'מפגשים, טקסים ופעולות — קרובים ואחרונים.',
+    'events.empty': 'אין אירועים מתוכננים כעת — בקרו שוב בקרוב.',
+    'events.upcoming': 'קרובים',
+    'events.past': 'אירועים שהיו',
+    'events.dateTbc': 'התאריך טרם נקבע',
+    'events.locationLabel': 'מיקום',
+    'events.details': 'פרטים',
+
+    'involved.title': 'הצטרפו',
+    'involved.subscribe.title': 'הרשמה לרשימת התפוצה',
+    'involved.subscribe.body':
+      'הצטרפו לרשימת התפוצה שלנו כדי לשמוע על אירועים, פעולות ודרכים לתמוך בתנועה.',
+    'involved.subscribe.placeholder':
+      'כאן ישובץ טופס ההרשמה לרשימת התפוצה.',
+    'involved.donate.title': 'תרומה',
+    'involved.donate.body':
+      'תרומתכם מסייעת לקיים את עבודתנו. התרומות מעובדות באופן מאובטח באמצעות Mollie.',
+
+    'contact.title': 'צרו קשר',
+    'contact.intro': 'צרו קשר או עקבו אחרינו ברשתות החברתיות.',
+    'contact.emailLabel': 'אימייל',
+    'contact.followLabel': 'עקבו אחרינו',
+
+    'footer.affiliation':
+      'קבוצת תמיכה עצמאית המזוהה עם תנועת לוחמים לשלום.',
+    'footer.parentMovement': 'התנועה',
+    'footer.credit': 'האתר נבנה על ידי',
+    'language.switch': 'שפה',
+  },
+
+  // ⚠️ AI-DRAFT TRANSLATION — pending native-speaker review by the chapter.
+  // Modern Standard Arabic. Sensitive terms (occupation/الاحتلال, Nakba/النكبة)
+  // need confirming. Movement name uses "مقاتلون من أجل السلام".
+  ar: {
+    'site.title': 'أصدقاء مقاتلون من أجل السلام في هولندا',
+    'site.shortTitle': 'أصدقاء مقاتلون من أجل السلام',
+
+    'nav.home': 'الرئيسية',
+    'nav.about': 'من نحن',
+    'nav.events': 'الفعاليات',
+    'nav.getInvolved': 'شارك معنا',
+    'nav.contact': 'اتصلوا بنا',
+
+    'cta.donate': 'تبرّع',
+    'cta.subscribe': 'اشترك',
+
+    'home.mission':
+      'نعمل في هولندا كواحدة من مجموعات الدعم العديدة حول العالم المرتبطة بحركة مقاتلون من أجل السلام. نعمل معًا بالوسائل اللاعنفية لإنهاء الاحتلال وتحقيق السلام والمساواة والأمن لجميع الناس في المنطقة.',
+
+    'home.instagram.title': 'من حسابنا على إنستغرام',
+    'home.instagram.body':
+      'تابعوا ‎@nlfcfpeace‎ للحصول على التحديثات والأنشطة والفعاليات القادمة.',
+    'home.instagram.cta': 'تابعونا على إنستغرام',
+
+    'about.title': 'من نحن',
+    'about.placeholder':
+      'نص مؤقّت. مقاتلون من أجل السلام حركة من الإسرائيليين والفلسطينيين الذين ألقوا سلاحهم ويعملون معًا بالوسائل اللاعنفية ضد الاحتلال ومن أجل مستقبل من السلام والمساواة والأمن. مجموعة الأصدقاء في هولندا واحدة من مجموعات الدعم العديدة حول العالم المرتبطة بالحركة.',
+    'about.note':
+      'هذا نص مؤقّت سيُستبدل بكلمات المجموعة نفسها.',
+
+    'events.title': 'الفعاليات',
+    'events.intro': 'لقاءات ومراسم وأنشطة — قادمة وحديثة.',
+    'events.empty': 'لا توجد فعاليات مجدولة حاليًا — عودوا قريبًا.',
+    'events.upcoming': 'القادمة',
+    'events.past': 'فعاليات سابقة',
+    'events.dateTbc': 'موعد لم يُؤكَّد بعد',
+    'events.locationLabel': 'المكان',
+    'events.details': 'التفاصيل',
+
+    'involved.title': 'شارك معنا',
+    'involved.subscribe.title': 'اشترك في النشرة',
+    'involved.subscribe.body':
+      'اشتركوا في نشرتنا البريدية لتصلكم أخبار الفعاليات والأنشطة وطرق دعم الحركة.',
+    'involved.subscribe.placeholder':
+      'سيتم تضمين نموذج الاشتراك في النشرة هنا.',
+    'involved.donate.title': 'تبرّع',
+    'involved.donate.body':
+      'تساعد مساهمتكم في استمرار عملنا. تتم معالجة التبرعات بأمان عبر Mollie.',
+
+    'contact.title': 'اتصلوا بنا',
+    'contact.intro': 'تواصلوا معنا أو تابعونا على وسائل التواصل الاجتماعي.',
+    'contact.emailLabel': 'البريد الإلكتروني',
+    'contact.followLabel': 'تابعونا',
+
+    'footer.affiliation':
+      'مجموعة دعم مستقلة منتسبة إلى حركة مقاتلون من أجل السلام.',
+    'footer.parentMovement': 'الحركة الأم',
+    'footer.credit': 'الموقع من إنشاء',
+    'language.switch': 'اللغة',
   },
 } as const;
 
