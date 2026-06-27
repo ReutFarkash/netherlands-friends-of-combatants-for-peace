@@ -13,11 +13,9 @@
     "astro": "^7.0.3"
   },
   "devDependencies": {
+    "@fontsource/alef": "^5.2.8",
     "@fontsource/merriweather": "^5.2.11",
-    "@fontsource/noto-naskh-arabic": "^5.2.11",
-    "@fontsource/noto-sans-arabic": "^5.2.10",
-    "@fontsource/noto-sans-hebrew": "^5.2.8",
-    "@fontsource/noto-serif-hebrew": "^5.2.8",
+    "@fontsource/rubik": "^5.2.8",
     "@tailwindcss/vite": "^4.3.1",
     "tailwindcss": "^4.3.1"
   }

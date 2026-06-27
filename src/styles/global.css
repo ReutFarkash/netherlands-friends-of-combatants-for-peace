@@ -6,16 +6,15 @@
 @import '@fontsource/merriweather/900.css';
 
 /*
-  Hebrew + Arabic webfonts — the Latin faces above carry no HE/AR glyphs.
-  Noto Serif Hebrew / Noto Naskh Arabic for headings, Noto Sans for body.
+  Brand fonts for Hebrew + Arabic (the Latin faces above carry no HE/AR glyphs).
+  Per the chapter's brand spec: Alef for Hebrew, Rubik for Arabic (Rubik's
+  arabic subset). Both are sans, so each is used for headings and body alike.
   Applied per-locale via the html[lang=…] overrides below.
 */
-@import '@fontsource/noto-serif-hebrew/400.css';
-@import '@fontsource/noto-serif-hebrew/700.css';
-@import '@fontsource/noto-sans-hebrew/400.css';
-@import '@fontsource/noto-naskh-arabic/400.css';
-@import '@fontsource/noto-naskh-arabic/700.css';
-@import '@fontsource/noto-sans-arabic/400.css';
+@import '@fontsource/alef/400.css';
+@import '@fontsource/alef/700.css';
+@import '@fontsource/rubik/400.css';
+@import '@fontsource/rubik/700.css';
 
 /*
   Brand theme tokens. Tailwind v4 reads these from @theme and exposes them
@@ -48,18 +47,19 @@
   }
 
   /*
-    Per-locale fonts for the RTL languages. CSS custom properties cascade, so
-    overriding --font-serif / --font-sans on the <html lang> element re-points
-    every `font-serif` / `font-sans` utility for that locale.
+    Per-locale brand fonts for the RTL languages (Alef = Hebrew, Rubik = Arabic).
+    CSS custom properties cascade, so overriding --font-serif / --font-sans on the
+    <html lang> element re-points every `font-serif` / `font-sans` utility for that
+    locale. Each script has one brand face, used for both headings and body.
   */
   html[lang='he'] {
-    --font-serif: 'Noto Serif Hebrew', 'Merriweather', serif;
-    --font-sans: 'Noto Sans Hebrew', system-ui, sans-serif;
+    --font-serif: 'Alef', 'Merriweather', sans-serif;
+    --font-sans: 'Alef', system-ui, sans-serif;
   }
 
   html[lang='ar'] {
-    --font-serif: 'Noto Naskh Arabic', 'Merriweather', serif;
-    --font-sans: 'Noto Sans Arabic', system-ui, sans-serif;
+    --font-serif: 'Rubik', 'Merriweather', sans-serif;
+    --font-sans: 'Rubik', system-ui, sans-serif;
   }
 
   /* Arabic connected script breaks under letter-spacing; neutralise it in RTL. */
@@ -73,11 +73,11 @@
     keeps specificity at 0 so headings/body still win their own fonts.
   */
   :where([lang='he']) {
-    font-family: 'Noto Sans Hebrew', system-ui, sans-serif;
+    font-family: 'Alef', system-ui, sans-serif;
   }
 
   :where([lang='ar']) {
-    font-family: 'Noto Sans Arabic', system-ui, sans-serif;
+    font-family: 'Rubik', system-ui, sans-serif;
   }
 
   body {
