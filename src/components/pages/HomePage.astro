@@ -14,38 +14,99 @@ const t = useTranslations(locale);
 const donateUrl =
   'https://payment-links.mollie.com/en/payment/9Ytth7uKvNipqJVyV7gFj/details';
 const subscribeUrl = `${getRelativeLocaleUrl(locale, 'get-involved')}#subscribe`;
-const logoSrc = `${import.meta.env.BASE_URL}/logo-teal.png`.replace('//', '/');
 ---
 
 <BaseLayout locale={locale} path="">
-  <section class="flex flex-col items-center gap-6 py-8 text-center">
-    <img
-      src={logoSrc}
-      alt={t('site.title')}
-      width="160"
-      height="160"
-      class="h-32 w-auto sm:h-40"
-    />
-    <h1 class="max-w-3xl text-3xl sm:text-4xl">{t('site.title')}</h1>
-    <p class="max-w-2xl text-lg text-ink/80">{t('home.mission')}</p>
+  {/*
+    "Common Ground" hero — two fields (combatant teal / shared earth) that meet
+    on a seam, with the message sitting on the common ground. The seam is the
+    signature element; one load moment draws it across. See content-provenance
+    for the chapter-confirm status of the eyebrow + headline copy.
+  */}
+  <section class="hero overflow-hidden rounded-2xl shadow-sm">
+    <div class="hero-top bg-teal-deep px-6 py-14 text-white sm:px-12 sm:py-20">
+      <p
+        class="hero-eyebrow text-xs font-semibold uppercase tracking-[0.2em] text-sage-lt"
+      >
+        {t('home.hero.eyebrow')}
+      </p>
+      <h1
+        class="hero-headline mt-3 max-w-3xl text-balance text-3xl font-black leading-[1.1] text-white sm:text-5xl"
+      >
+        {t('home.hero.headline')}
+      </h1>
+    </div>
 
-    <div class="mt-2 flex flex-wrap items-center justify-center gap-4">
-      <a
-        href={donateUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="rounded-md bg-teal-deep px-6 py-3 font-semibold text-white no-underline hover:bg-teal"
-      >
-        {t('cta.donate')}
-      </a>
-      <a
-        href={subscribeUrl}
-        class="rounded-md border-2 border-teal-deep px-6 py-3 font-semibold text-teal-deep no-underline hover:bg-teal-deep hover:text-white"
-      >
-        {t('cta.subscribe')}
-      </a>
+    <div class="hero-seam" aria-hidden="true"></div>
+
+    <div class="bg-bg-warm px-6 py-10 text-ink sm:px-12">
+      <p class="max-w-2xl text-lg leading-relaxed text-ink/80">
+        {t('home.mission')}
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+        <a
+          href={donateUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-md bg-teal-deep px-6 py-3 font-semibold text-white no-underline hover:bg-teal"
+        >
+          {t('cta.donate')}
+        </a>
+        <a
+          href={subscribeUrl}
+          class="group inline-flex items-center gap-2 font-semibold text-teal-deep no-underline"
+        >
+          <span class="group-hover:underline">{t('cta.subscribe')}</span>
+          <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
+        </a>
+      </div>
     </div>
   </section>
 
   <InstagramFeed locale={locale} />
 </BaseLayout>
+
+<style>
+  /* The signature seam: the line where the two sides meet. */
+  .hero-seam {
+    height: 3px;
+    background-color: var(--color-sage-lt);
+  }
+
+  /* One restrained load moment — the message settles and the seam draws across.
+     Disabled entirely for anyone who prefers reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-eyebrow,
+    .hero-headline {
+      animation: hero-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .hero-headline {
+      animation-delay: 0.08s;
+    }
+    .hero-seam {
+      transform-origin: left;
+      animation: hero-draw 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+    }
+  }
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes hero-draw {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+</style>
