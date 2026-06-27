@@ -96,25 +96,31 @@ const url = (slug: string) => getRelativeLocaleUrl(locale, slug);
                       />
                     </svg>
                   </a>
-                  <ul
-                    class="invisible absolute left-0 top-full z-20 mt-2 min-w-48 rounded-md bg-white py-2 text-ink opacity-0 shadow-lg ring-1 ring-black/5 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+                  {/* Wrapper carries a transparent pt-2 "bridge" so the gap
+                      between the trigger and the panel stays hoverable. */}
+                  <div
+                    class="invisible absolute left-0 top-full z-20 pt-2 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
                   >
-                    {item.children.map((child) => (
-                      <li>
-                        <a
-                          href={url(child.slug)}
-                          class:list={[
-                            'block px-4 py-2 hover:bg-bg-warm',
-                            isActive(child.slug) &&
-                              'font-semibold text-teal-deep',
-                          ]}
-                          aria-current={isActive(child.slug) ? 'page' : undefined}
-                        >
-                          {t(child.key)}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+                    <ul
+                      class="min-w-48 rounded-md bg-white py-2 text-ink shadow-lg ring-1 ring-black/5"
+                    >
+                      {item.children.map((child) => (
+                        <li>
+                          <a
+                            href={url(child.slug)}
+                            class:list={[
+                              'block px-4 py-2 hover:bg-bg-warm',
+                              isActive(child.slug) &&
+                                'font-semibold text-teal-deep',
+                            ]}
+                            aria-current={isActive(child.slug) ? 'page' : undefined}
+                          >
+                            {t(child.key)}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </li>
               ) : (
                 <li>

@@ -29,33 +29,26 @@ const faviconHref = `${import.meta.env.BASE_URL}/logo-teal.png`.replace('//', '/
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />
     <meta name="generator" content={Astro.generator} />
-    {/* Apply the "show sources" preference before paint (no flash). Dev wrapper only. */}
+    {/* Apply Dev/Public preference before paint (no flash). Default = Public. */}
     <script is:inline>
-      if (localStorage.getItem('nlfcfp-prov') === '1')
-        document.documentElement.classList.add('prov-on');
+      if (localStorage.getItem('nlfcfp-dev') === '1')
+        document.documentElement.classList.add('dev-on');
     </script>
   </head>
   <body class="flex min-h-screen flex-col">
-    {/* Dev-showcase banner — this deploy is a work-in-progress review build, not the final site. */}
-    <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-amber-400 px-4 py-2 text-center text-sm text-ink">
+    {/* Dev wrapper — shown only in Dev view (the `dev-only` class). The default
+        public view hides all of this; the corner toggle switches modes. */}
+    <div class="dev-only flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-amber-400 px-4 py-2 text-center text-sm text-ink">
       <span>
         🚧 <strong>Development preview</strong> — drafts for review, not the final site.
       </span>
       <a href={`${import.meta.env.BASE_URL}/dev`.replace('//', '/')} class="font-semibold text-ink underline">
         View all previews →
       </a>
-      <button
-        type="button"
-        id="prov-toggle"
-        class="rounded border border-ink/40 px-2 py-0.5 font-semibold text-ink hover:bg-ink/10"
-        aria-pressed="false"
-      >
-        Show sources
-      </button>
     </div>
     {
       locale !== 'en' && (
-        <div class="prov-translation bg-violet-100 px-4 py-2 text-center text-sm text-violet-900">
+        <div class="dev-only bg-violet-100 px-4 py-2 text-center text-sm text-violet-900">
           🌐 This page is an AI machine-translation — pending native review.
         </div>
       )
@@ -65,23 +58,25 @@ const faviconHref = `${import.meta.env.BASE_URL}/logo-teal.png`.replace('//', '/
       <slot />
     </main>
     <Footer locale={locale} />
-    {/* Dev wrapper: toggle the "show sources" provenance view, persisted across pages. */}
+
+    {/* Dev/Public toggle — always reachable (even when the dev banner is hidden).
+        Whole control is removed at launch along with the rest of the dev wrapper. */}
+    <div
+      class="fixed bottom-3 right-3 z-50 flex overflow-hidden rounded-full border border-ink/20 bg-white/95 text-xs font-semibold shadow-md backdrop-blur"
+      role="group"
+      aria-label="Dev / Public view"
+    >
+      <button type="button" data-dev-mode="dev" class="px-3 py-1.5 transition-colors">Dev</button>
+      <button type="button" data-dev-mode="public" class="px-3 py-1.5 transition-colors">Public</button>
+    </div>
     <script is:inline>
-      (() => {
-        const btn = document.getElementById('prov-toggle');
-        if (!btn) return;
-        const sync = () => {
-          const on = document.documentElement.classList.contains('prov-on');
-          btn.textContent = on ? 'Hide sources' : 'Show sources';
-          btn.setAttribute('aria-pressed', String(on));
-        };
-        sync();
-        btn.addEventListener('click', () => {
-          const on = document.documentElement.classList.toggle('prov-on');
-          localStorage.setItem('nlfcfp-prov', on ? '1' : '0');
-          sync();
+      document.querySelectorAll('[data-dev-mode]').forEach((b) => {
+        b.addEventListener('click', () => {
+          const dev = b.getAttribute('data-dev-mode') === 'dev';
+          document.documentElement.classList.toggle('dev-on', dev);
+          localStorage.setItem('nlfcfp-dev', dev ? '1' : '0');
         });
-      })();
+      });
     </script>
   </body>
 </html>

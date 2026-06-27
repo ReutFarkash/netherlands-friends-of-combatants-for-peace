@@ -68,15 +68,31 @@
 }
 
 /*
-  Provenance tags — part of the dev/review wrapper only.
-  Hidden in the default public view; revealed when <html> has `prov-on`
-  (toggled by the "Show sources" button in the dev banner). At launch the
-  dev banner is removed and these simply never show — the spans are inert.
+  Dev wrapper — the default view is the clean public site. Everything dev
+  (banner, translation notes, provenance badges) is hidden until <html> has
+  `dev-on`, toggled by the fixed Dev/Public control. At launch the whole
+  wrapper is removed, so these never show.
 */
+html:not(.dev-on) .dev-only {
+  display: none !important;
+}
+
+/* Fixed Dev/Public segmented toggle — active segment reflects current mode. */
+[data-dev-mode] {
+  color: var(--color-ink);
+  opacity: 0.6;
+}
+html.dev-on [data-dev-mode='dev'],
+html:not(.dev-on) [data-dev-mode='public'] {
+  background: var(--color-teal-deep);
+  color: #fff;
+  opacity: 1;
+}
+
 .prov-badge {
   display: none;
 }
-html.prov-on .prov-badge {
+html.dev-on .prov-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
@@ -110,11 +126,3 @@ html.prov-on .prov-badge {
   color: #be123c;
   background: #fff1f2;
 } /* rose — needs confirmation */
-
-/* Page-level translation note (dev mode, non-English pages). */
-.prov-translation {
-  display: none;
-}
-html.prov-on .prov-translation {
-  display: block;
-}
