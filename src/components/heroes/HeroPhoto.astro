@@ -1,0 +1,57 @@
+---
+// Option D — "Photo-led" hero. IDEA BORROWED from sister site afcfp.org
+// (full-bleed documentary photo + overlaid words + single CTA). NO sister-site
+// asset is used: the image here is a CSS PLACEHOLDER. A real version needs a
+// photo the chapter owns or has licensed.
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { useTranslations, type Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const donateUrl =
+  'https://payment-links.mollie.com/en/payment/9Ytth7uKvNipqJVyV7gFj/details';
+const subscribeUrl = `${getRelativeLocaleUrl(locale, 'get-involved')}#subscribe`;
+---
+
+<section class="relative flex min-h-[26rem] items-end overflow-hidden rounded-2xl shadow-sm sm:min-h-[32rem]">
+  {/* PLACEHOLDER image layer — no real/borrowed photo. Swap for a licensed image. */}
+  <div class="absolute inset-0 bg-gradient-to-br from-teal-deep via-teal to-ink"></div>
+  <div class="absolute inset-0 bg-ink/35"></div>
+  <span
+    class="absolute right-4 top-4 rounded bg-ink/70 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-white/90"
+  >
+    Placeholder — chapter photo goes here
+  </span>
+
+  <div class="relative max-w-3xl p-8 text-white sm:p-12">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-sage-lt">
+      {t('home.hero.eyebrow')}
+    </p>
+    <h1 class="mt-3 text-balance text-4xl font-black leading-[1.05] text-white drop-shadow sm:text-5xl">
+      {t('home.hero.headline')}
+    </h1>
+    <p class="mt-4 max-w-xl text-base text-white/90">{t('home.mission')}</p>
+    <div class="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3">
+      <a
+        href={donateUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="rounded-md bg-white px-6 py-3 font-semibold text-teal-deep no-underline hover:bg-sage-lt"
+      >
+        {t('cta.donate')}
+      </a>
+      <a
+        href={subscribeUrl}
+        class="group inline-flex items-center gap-2 font-semibold text-white no-underline"
+      >
+        <span class="group-hover:underline">{t('cta.subscribe')}</span>
+        <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
+      </a>
+    </div>
+  </div>
+</section>
