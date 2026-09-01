@@ -1,7 +1,7 @@
 ---
 title: "Live screening: 21st Israeli-Palestinian Joint Memorial Ceremony"
 date: 2026-04-20
-location: "Café Belcampo, Hannie Dankbaarpassage 10, 1053 RT Amsterdam"
+location: "Café Belcampo, Amsterdam"
 description: "A live screening of the 21st Israeli-Palestinian Joint Memorial Ceremony — organised by Combatants for Peace and the Parents Circle Families Forum, and broadcast live from Israel-Palestine — followed by a moderated discussion. Together we mourned and commemorated the lives lost to war and violence, in a shared act of remembrance and a refusal of dehumanisation."
 link: "https://www.instagram.com/p/DXUR03NCGXi/"
 ---
