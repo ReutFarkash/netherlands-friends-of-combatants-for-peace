@@ -1,4 +1,5 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import { useTranslations, type Locale } from '../i18n/ui';
 
 interface Props {
@@ -9,14 +10,16 @@ const { locale } = Astro.props;
 const t = useTranslations(locale);
 
 const email = 'nlcfpfriends@gmail.com';
-const socials = [
-  { label: 'Instagram', href: 'https://www.instagram.com/nlfcfpeace' },
-  {
-    label: 'Facebook',
-    href: 'https://www.facebook.com/people/Netherlands-friends-of-CfP/61587000159046/',
-  },
-  { label: 'Linktree', href: 'https://linktr.ee/nlfcfp' },
-];
+const contactUrl = getRelativeLocaleUrl(locale, 'contact');
+// Internal anchor to the Donate card — avoids a fourth, unconfirmed external
+// money link in the footer. Swap to the direct donation URL once Roni confirms
+// the account (currently a Mollie link under "Sivmo", not verified as CfP-NL's).
+const donateUrl = `${getRelativeLocaleUrl(locale, 'get-involved')}#donate`;
+
+const btnSolid =
+  'inline-block rounded-md bg-white px-5 py-2.5 font-semibold text-teal-deep no-underline hover:bg-sage-lt';
+const btnGhost =
+  'inline-block rounded-md border-2 border-white/70 px-5 py-2.5 font-semibold text-white no-underline hover:bg-white hover:text-teal-deep';
 ---
 
 <footer class="mt-16 bg-teal-deep text-white">
@@ -27,30 +30,70 @@ const socials = [
         <p class="mt-2 max-w-md text-sm text-white/75">
           {t('footer.affiliation')}
         </p>
+
+        {/* Primary calls to action: Contact + Donate */}
+        <div class="mt-5 flex flex-wrap gap-3">
+          <a href={contactUrl} class={btnGhost}>{t('nav.contact')}</a>
+          <a href={donateUrl} class={btnSolid}>{t('cta.donate')}</a>
+        </div>
       </div>
 
       <nav aria-label="Social and contact" class="text-sm">
-        <ul class="flex flex-col gap-2">
+        <ul class="flex flex-col gap-3">
           <li>
             <span class="text-white/60">{t('contact.emailLabel')}:</span>{' '}
             <a class="text-white underline hover:text-sage-lt" href={`mailto:${email}`}>
               {email}
             </a>
           </li>
-          {
-            socials.map((s) => (
+
+          {/* Social platforms as logo links */}
+          <li>
+            <ul class="flex items-center gap-4">
               <li>
                 <a
-                  class="text-white underline hover:text-sage-lt"
-                  href={s.href}
+                  class="inline-flex text-white hover:text-sage-lt"
+                  href="https://www.instagram.com/nlfcfpeace"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Instagram"
                 >
-                  {s.label}
+                  <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path
+                      d="M7.03.084c-1.277.06-2.149.264-2.911.563-.79.308-1.458.72-2.123 1.388S.766 3.796.46 4.586c-.295.764-.496 1.637-.552 2.914C-.148 8.775-.16 9.186-.154 12.445c.006 3.259.02 3.667.083 4.947.06 1.277.264 2.148.563 2.911.308.789.72 1.457 1.388 2.123.668.665 1.337 1.074 2.129 1.38.762.295 1.635.496 2.913.552 1.278.056 1.688.069 4.946.063 3.258-.006 3.668-.02 4.948-.081 1.28-.061 2.147-.265 2.91-.563.789-.309 1.458-.72 2.123-1.388.665-.668 1.074-1.338 1.38-2.128.295-.763.496-1.636.55-2.912.057-1.281.07-1.69.063-4.948-.006-3.258-.021-3.667-.082-4.947-.06-1.28-.264-2.149-.563-2.912-.308-.789-.72-1.457-1.388-2.123C21.204.792 20.536.383 19.746.077 18.983-.218 18.11-.42 16.833-.474 15.556-.53 15.146-.543 11.887-.537 8.628-.531 8.22-.516 6.94-.453zM6.9 21.783c-1.17-.05-1.805-.245-2.228-.408-.56-.216-.96-.475-1.381-.893-.421-.417-.68-.818-.898-1.376-.164-.423-.362-1.056-.417-2.227-.06-1.264-.072-1.644-.079-4.848-.007-3.203.005-3.582.06-4.848.05-1.169.246-1.805.408-2.227.216-.561.475-.96.893-1.382.417-.421.818-.68 1.376-.898.423-.164 1.056-.36 2.226-.417 1.265-.06 1.645-.072 4.848-.08 3.203-.006 3.583.006 4.849.061 1.169.05 1.805.245 2.227.408.56.216.96.474 1.382.893.421.418.68.817.898 1.376.164.421.36 1.055.417 2.225.06 1.265.073 1.645.08 4.848.006 3.204-.006 3.583-.061 4.848-.05 1.17-.245 1.806-.408 2.229-.216.56-.475.96-.893 1.381-.418.422-.818.68-1.376.898-.421.164-1.056.361-2.226.417-1.265.06-1.645.073-4.849.08-3.203.007-3.582-.006-4.848-.06M16.953 5.586a1.44 1.44 0 1 0 2.881-.001 1.44 1.44 0 0 0-2.881.001M5.838 12.012a6.161 6.161 0 1 0 12.323-.024 6.161 6.161 0 0 0-12.323.024M8 12.008a4 4 0 1 1 8-.016 4 4 0 0 1-8 .016"
+                    ></path>
+                  </svg>
                 </a>
               </li>
-            ))
-          }
+              <li>
+                <a
+                  class="inline-flex text-white hover:text-sage-lt"
+                  href="https://www.facebook.com/people/Netherlands-friends-of-CfP/61587000159046/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                >
+                  <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path
+                      d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647z"
+                    ></path>
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a
+              class="text-white underline hover:text-sage-lt"
+              href="https://linktr.ee/nlfcfp"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Linktree
+            </a>
+          </li>
+
           <li>
             <span class="text-white/60">{t('footer.parentMovement')}:</span>{' '}
             <a

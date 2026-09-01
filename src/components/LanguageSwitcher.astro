@@ -7,32 +7,90 @@ interface Props {
   locale: Locale;
   /** Route slug without locale prefix, e.g. '' | 'about' | 'events'. */
   path: string;
+  /**
+   * 'bar'   = compact dropdown showing only the current language (desktop header).
+   * 'panel' = inline list of all languages (inside the already-open mobile menu).
+   */
+  variant?: 'bar' | 'panel';
 }
 
-const { locale, path } = Astro.props;
+const { locale, path, variant = 'bar' } = Astro.props;
 const locales = Object.keys(languages) as Locale[];
+const others = locales.filter((loc) => loc !== locale);
 ---
 
-<nav class="flex items-center gap-2 text-sm" aria-label="Language">
-  {
-    locales.map((loc, i) => (
-      <>
-        {i > 0 && <span aria-hidden="true" class="text-white/40">|</span>}
-        {loc === locale ? (
-          <span class="font-semibold text-white" aria-current="true" lang={loc}>
-            {languages[loc]}
-          </span>
-        ) : (
-          <a
-            class="text-white/80 hover:text-white"
-            href={getRelativeLocaleUrl(loc, path)}
-            hreflang={loc}
-            lang={loc}
-          >
-            {languages[loc]}
-          </a>
-        )}
-      </>
-    ))
-  }
-</nav>
+{
+  variant === 'panel' ? (
+    <nav class="flex items-center gap-2 text-sm" aria-label="Language">
+      {locales.map((loc, i) => (
+        <>
+          {i > 0 && <span aria-hidden="true" class="text-white/40">|</span>}
+          {loc === locale ? (
+            <span class="font-semibold text-white" aria-current="true" lang={loc}>
+              {languages[loc]}
+            </span>
+          ) : (
+            <a
+              class="text-white/80 hover:text-white"
+              href={getRelativeLocaleUrl(loc, path)}
+              hreflang={loc}
+              lang={loc}
+            >
+              {languages[loc]}
+            </a>
+          )}
+        </>
+      ))}
+    </nav>
+  ) : (
+    <details class="lang-menu group relative text-sm">
+      <summary
+        class="flex cursor-pointer list-none items-center gap-1 text-white/85 hover:text-white [&::-webkit-details-marker]:hidden"
+        aria-label="Language"
+      >
+        <span lang={locale}>{languages[locale]}</span>
+        <svg
+          class="h-3 w-3 opacity-80 transition group-open:rotate-180"
+          viewBox="0 0 12 12"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M2.5 4.5 6 8l3.5-3.5"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </summary>
+      <ul
+        class="absolute end-0 top-full z-20 mt-2 min-w-32 rounded-md bg-white py-1 text-ink shadow-lg ring-1 ring-black/5"
+      >
+        {others.map((loc) => (
+          <li>
+            <a
+              class="block px-4 py-2 hover:bg-bg-warm"
+              href={getRelativeLocaleUrl(loc, path)}
+              hreflang={loc}
+              lang={loc}
+            >
+              {languages[loc]}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </details>
+  )
+}
+
+<script>
+  // Close any open language dropdown when a click lands outside it.
+  document.addEventListener('click', (event) => {
+    document
+      .querySelectorAll<HTMLDetailsElement>('details.lang-menu[open]')
+      .forEach((menu) => {
+        if (!menu.contains(event.target as Node)) menu.open = false;
+      });
+  });
+</script>
